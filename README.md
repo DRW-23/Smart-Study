@@ -18,7 +18,7 @@ An AI-powered study planner for BSc (Hons) IT students at KDU. Uses a fine-tuned
 
 ---
 
-## Quick Start (for team members)
+## Quick Start (for users)
 
 ```bash
 # 1. Clone the repo
