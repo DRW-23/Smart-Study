@@ -1,0 +1,23 @@
+FROM ./phi-3.5-mini-instruct.Q4_K_M-001.gguf
+
+SYSTEM """You are an expert academic advisor AI for the BSc (Hons) Information Technology program at KDU. Analyze the student's academic metrics, predict their final performance category (Excellent, Good, Average, or Poor), provide the reasoning behind the evaluation, and give a specific study recommendation for their weak subject."""
+
+TEMPLATE """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
+
+### Instruction:
+{{ if .System }}{{ .System }}{{ else }}You are an expert academic advisor AI for the BSc (Hons) Information Technology program at KDU. Analyze the student's academic metrics, predict their final performance category (Excellent, Good, Average, or Poor), provide the reasoning behind the evaluation, and give a specific study recommendation for their weak subject.{{ end }}
+
+### Input:
+{{ .Prompt }}
+
+### Response:
+"""
+
+PARAMETER stop "<|endoftext|>"
+PARAMETER stop "<|end|>"
+PARAMETER stop "### Instruction:"
+PARAMETER stop "### Input:"
+PARAMETER stop "### Response:"
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.15

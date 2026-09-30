@@ -1,0 +1,501 @@
+Study_Hours,Attendance_%,Assignment_Marks,Quiz_Marks,Previous_GPA,Weak_Subject,Exam_Days_Left,Performance_Class
+43,91,44,90,2.99,Cloud Computing,59,Excellent
+23,62,53,32,1.55,Software Engineering,3,Average
+28,83,59,67,1.5,Software Engineering,22,Excellent
+37,51,87,51,1.52,Cloud Computing,26,Excellent
+31,98,71,89,2.42,Data Structures and Algorithms,48,Excellent
+7,76,80,36,1.93,Web App Development,40,Good
+22,43,89,43,3.52,Web App Development,10,Excellent
+30,92,31,89,1.81,Web App Development,9,Excellent
+39,53,65,79,3.16,Cloud Computing,3,Excellent
+10,93,33,83,1.58,Software Engineering,19,Good
+30,83,63,91,3.82,Cloud Computing,32,Excellent
+19,47,91,69,3.61,Cloud Computing,46,Excellent
+22,86,82,53,2.39,Machine Learning,46,Excellent
+33,54,74,94,1.54,Software Engineering,10,Excellent
+28,40,37,92,3.54,Machine Learning,18,Excellent
+12,74,64,62,3.01,Cyber Security,43,Excellent
+43,97,70,57,3.66,Software Engineering,9,Excellent
+16,73,62,77,2.43,Software Engineering,25,Excellent
+41,74,73,64,2.68,Software Engineering,38,Excellent
+18,42,30,34,2.9,Web App Development,15,Average
+43,66,38,44,1.78,Web App Development,14,Excellent
+36,78,81,33,3.77,Machine Learning,24,Excellent
+43,84,44,72,2.01,Machine Learning,14,Excellent
+36,46,88,57,3.82,Software Engineering,46,Excellent
+10,67,57,73,2.54,Machine Learning,12,Good
+32,64,91,30,2.07,Web App Development,58,Excellent
+17,80,32,99,2.78,Cloud Computing,10,Excellent
+41,72,80,73,2.11,Cloud Computing,55,Excellent
+36,71,81,91,3.93,Cloud Computing,53,Excellent
+16,78,31,32,2.25,Machine Learning,50,Good
+21,98,31,31,2.53,Cyber Security,24,Excellent
+41,71,30,48,3.2,Web App Development,54,Excellent
+30,71,99,61,2.98,Cyber Security,56,Excellent
+15,95,46,67,2.42,Machine Learning,53,Excellent
+38,45,40,45,3.59,Data Structures and Algorithms,7,Excellent
+20,68,32,49,2.31,Networking,37,Good
+23,65,96,48,2.37,Networking,8,Excellent
+37,79,68,30,3.19,Software Engineering,58,Excellent
+29,89,52,60,3.69,Networking,36,Excellent
+11,99,45,89,2.15,Networking,2,Excellent
+16,44,66,61,3.08,Web App Development,10,Good
+39,58,77,32,3.64,Cloud Computing,55,Excellent
+37,63,65,67,3.17,Cyber Security,36,Excellent
+29,74,54,47,1.9,Data Structures and Algorithms,19,Excellent
+6,93,64,90,2.06,Data Structures and Algorithms,34,Excellent
+8,72,43,50,1.95,Web App Development,57,Average
+12,46,96,46,2.27,Web App Development,49,Good
+16,98,51,59,3.93,Networking,46,Excellent
+12,66,56,50,2.76,Data Structures and Algorithms,29,Good
+37,44,90,77,2.2,Software Engineering,36,Excellent
+21,83,59,75,3.79,Software Engineering,36,Excellent
+41,63,75,82,2.93,Cyber Security,34,Excellent
+25,71,62,96,1.92,Software Engineering,26,Excellent
+35,93,87,96,2.93,Data Structures and Algorithms,25,Excellent
+36,86,52,95,2.14,Networking,43,Excellent
+6,65,46,62,1.84,Data Structures and Algorithms,55,Average
+43,68,71,55,3.53,Machine Learning,26,Excellent
+28,52,89,36,2.75,Data Structures and Algorithms,46,Excellent
+24,40,37,45,1.63,Networking,52,Average
+27,54,95,61,2.95,Software Engineering,23,Excellent
+29,97,92,91,2.22,Cloud Computing,59,Excellent
+26,88,81,71,3.56,Cyber Security,55,Excellent
+41,72,37,82,2.18,Machine Learning,45,Excellent
+9,78,97,35,1.63,Software Engineering,53,Good
+34,86,84,69,3.32,Cyber Security,14,Excellent
+34,58,46,92,2.58,Software Engineering,59,Excellent
+30,76,91,52,2.57,Machine Learning,13,Excellent
+5,97,30,63,2.1,Data Structures and Algorithms,55,Good
+29,79,30,45,2.79,Networking,6,Excellent
+26,68,96,55,2.39,Cloud Computing,38,Excellent
+26,96,58,98,1.74,Machine Learning,31,Excellent
+9,51,45,77,3.52,Networking,37,Good
+37,69,52,39,3.87,Data Structures and Algorithms,37,Excellent
+38,91,39,48,2.76,Machine Learning,2,Excellent
+9,84,33,45,1.68,Web App Development,56,Average
+6,88,61,53,3.19,Cloud Computing,36,Excellent
+37,72,90,80,3.55,Software Engineering,13,Excellent
+7,40,62,69,3.76,Software Engineering,45,Good
+33,52,41,75,1.55,Cloud Computing,52,Good
+39,62,37,55,3.2,Web App Development,35,Excellent
+11,43,87,58,1.6,Networking,26,Average
+25,96,65,39,2.56,Data Structures and Algorithms,25,Excellent
+39,88,65,53,3.67,Software Engineering,33,Excellent
+41,51,84,42,3.35,Networking,36,Excellent
+34,56,91,42,3.74,Web App Development,50,Excellent
+40,51,90,48,1.73,Networking,8,Excellent
+32,53,81,45,2.62,Software Engineering,36,Excellent
+16,64,81,82,3.48,Cyber Security,58,Excellent
+43,84,82,71,3.94,Data Structures and Algorithms,15,Excellent
+35,97,34,64,3.72,Cyber Security,44,Excellent
+15,57,38,87,3.05,Cloud Computing,39,Good
+11,85,42,69,1.68,Networking,51,Good
+31,97,95,34,2.78,Data Structures and Algorithms,39,Excellent
+23,47,94,46,3.87,Web App Development,26,Excellent
+8,75,99,60,2.7,Data Structures and Algorithms,45,Excellent
+43,66,48,68,2.59,Data Structures and Algorithms,46,Excellent
+17,89,87,49,1.8,Web App Development,42,Excellent
+43,40,32,91,2.5,Cloud Computing,50,Excellent
+29,95,62,67,2.59,Data Structures and Algorithms,59,Excellent
+36,84,90,76,3.73,Cloud Computing,55,Excellent
+25,50,65,48,3.92,Cloud Computing,19,Excellent
+18,54,60,30,3.07,Cloud Computing,55,Good
+7,55,86,41,3.9,Software Engineering,17,Excellent
+12,77,53,57,2.34,Machine Learning,59,Good
+32,75,37,87,2.07,Cloud Computing,29,Excellent
+32,76,70,93,2.63,Web App Development,18,Excellent
+13,72,58,42,3.78,Machine Learning,7,Excellent
+22,90,98,76,3.8,Cloud Computing,11,Excellent
+34,89,34,62,3.44,Web App Development,19,Excellent
+36,86,78,40,2.99,Web App Development,26,Excellent
+26,98,56,78,3.6,Cyber Security,35,Excellent
+39,40,50,84,3.66,Cyber Security,18,Excellent
+9,70,34,32,2.89,Data Structures and Algorithms,38,Good
+41,49,46,30,3.89,Cloud Computing,14,Excellent
+8,40,61,63,2.4,Cloud Computing,9,Average
+43,65,63,83,3.43,Machine Learning,51,Excellent
+16,40,83,34,1.72,Web App Development,58,Average
+21,87,76,52,3.39,Cloud Computing,22,Excellent
+18,41,80,67,3.04,Data Structures and Algorithms,35,Good
+42,89,59,80,3.76,Networking,53,Excellent
+42,72,59,80,3.24,Networking,30,Excellent
+8,49,85,46,2.73,Networking,21,Good
+28,44,63,35,2.73,Software Engineering,14,Good
+15,90,52,84,2.96,Web App Development,12,Excellent
+20,47,33,33,2.36,Networking,4,Average
+36,42,56,61,1.93,Software Engineering,59,Good
+23,60,34,71,1.94,Networking,22,Good
+10,40,34,41,2.02,Data Structures and Algorithms,35,Poor
+18,65,74,56,1.6,Cyber Security,58,Good
+26,86,85,92,2.44,Data Structures and Algorithms,18,Excellent
+30,75,30,37,3.37,Software Engineering,53,Excellent
+19,86,85,43,3.05,Web App Development,24,Excellent
+18,63,31,55,1.59,Machine Learning,57,Average
+11,42,52,47,2.62,Cloud Computing,36,Average
+19,64,57,68,2.31,Data Structures and Algorithms,40,Good
+26,65,73,54,3.73,Web App Development,21,Excellent
+29,43,39,96,3.12,Cloud Computing,19,Excellent
+40,86,63,37,2.97,Cyber Security,45,Excellent
+23,81,70,35,3.75,Cyber Security,35,Excellent
+10,76,62,82,1.75,Cloud Computing,7,Good
+10,94,33,91,2.21,Cyber Security,32,Excellent
+28,94,38,32,2.81,Web App Development,41,Excellent
+41,75,53,35,2.49,Data Structures and Algorithms,29,Excellent
+15,43,35,80,3.55,Web App Development,3,Good
+19,50,37,55,2.2,Web App Development,45,Average
+9,45,55,97,2.56,Cloud Computing,34,Good
+24,88,41,76,3.27,Machine Learning,15,Excellent
+42,76,40,32,1.63,Machine Learning,51,Excellent
+14,44,52,39,3.97,Data Structures and Algorithms,14,Good
+44,41,94,92,3.2,Cloud Computing,18,Excellent
+13,50,44,53,3.02,Machine Learning,36,Good
+34,70,78,98,3.58,Cyber Security,45,Excellent
+18,92,38,63,1.95,Machine Learning,36,Excellent
+5,79,93,51,1.62,Cyber Security,30,Good
+12,50,43,89,1.91,Data Structures and Algorithms,22,Average
+41,44,55,91,2.4,Web App Development,46,Excellent
+29,57,69,68,3.28,Web App Development,33,Excellent
+42,72,52,92,2.76,Machine Learning,26,Excellent
+21,72,95,82,3.77,Cyber Security,52,Excellent
+43,90,99,35,2.33,Software Engineering,52,Excellent
+12,81,93,44,3.7,Networking,34,Excellent
+34,78,56,65,3.99,Software Engineering,58,Excellent
+37,76,56,84,1.86,Networking,5,Excellent
+26,41,39,34,3.69,Software Engineering,34,Good
+42,52,60,76,3.62,Web App Development,25,Excellent
+19,68,37,34,2.72,Cloud Computing,5,Good
+16,84,31,56,3.1,Web App Development,52,Excellent
+40,75,55,72,3,Networking,21,Excellent
+15,49,67,35,2.5,Cloud Computing,48,Good
+30,85,41,42,1.85,Cyber Security,19,Excellent
+29,72,89,72,3.83,Machine Learning,37,Excellent
+8,44,66,60,3.02,Software Engineering,55,Good
+33,53,69,70,3.81,Cyber Security,24,Excellent
+5,85,50,65,1.81,Cyber Security,58,Good
+5,93,84,69,3.02,Machine Learning,48,Excellent
+13,92,38,81,3.47,Cyber Security,27,Excellent
+39,91,54,67,2.37,Machine Learning,19,Excellent
+31,73,46,72,1.58,Data Structures and Algorithms,52,Excellent
+28,64,81,99,1.58,Machine Learning,34,Excellent
+33,82,51,55,1.53,Networking,22,Excellent
+11,56,78,49,2.54,Software Engineering,29,Good
+44,88,30,42,2.49,Cloud Computing,52,Excellent
+23,71,59,58,3.06,Cloud Computing,30,Excellent
+34,55,69,48,1.66,Software Engineering,15,Good
+6,93,67,80,1.89,Cloud Computing,2,Excellent
+12,68,84,32,2.43,Machine Learning,11,Good
+23,85,63,84,1.89,Networking,51,Excellent
+11,68,37,94,2.88,Data Structures and Algorithms,4,Excellent
+28,62,88,83,2.35,Networking,38,Excellent
+7,90,37,63,3.51,Cloud Computing,25,Excellent
+18,71,75,45,2.49,Data Structures and Algorithms,38,Excellent
+25,53,84,77,1.72,Software Engineering,11,Good
+11,72,52,48,1.81,Data Structures and Algorithms,20,Good
+40,68,89,31,3.78,Cyber Security,6,Excellent
+24,50,31,96,2.98,Web App Development,13,Excellent
+24,44,66,67,3.43,Cyber Security,10,Excellent
+38,92,73,53,1.79,Software Engineering,31,Excellent
+27,71,43,38,2.85,Cloud Computing,46,Excellent
+29,78,51,33,1.83,Cloud Computing,30,Good
+38,62,66,99,3.79,Data Structures and Algorithms,22,Excellent
+40,80,67,63,2.89,Machine Learning,26,Excellent
+42,97,56,86,2.17,Networking,28,Excellent
+44,73,41,82,1.94,Web App Development,46,Excellent
+21,65,91,75,1.62,Machine Learning,55,Excellent
+5,90,82,65,3.43,Software Engineering,30,Excellent
+25,50,69,40,2.39,Networking,50,Good
+43,79,83,84,3.16,Cloud Computing,55,Excellent
+26,44,85,62,2.17,Data Structures and Algorithms,48,Good
+24,58,91,55,2.69,Networking,10,Excellent
+13,79,46,30,2.74,Cloud Computing,44,Good
+44,81,54,68,1.69,Machine Learning,51,Excellent
+41,83,73,80,2.18,Machine Learning,35,Excellent
+16,58,73,88,3.79,Web App Development,18,Excellent
+14,96,84,76,1.72,Web App Development,17,Excellent
+28,58,37,50,3.4,Data Structures and Algorithms,38,Excellent
+20,45,54,41,2.05,Networking,27,Average
+30,86,61,39,2.97,Web App Development,18,Excellent
+27,65,36,43,1.8,Machine Learning,8,Good
+13,90,77,88,3.86,Networking,19,Excellent
+35,69,68,47,2.81,Machine Learning,40,Excellent
+21,53,60,53,2.08,Software Engineering,46,Good
+38,42,66,72,2.35,Machine Learning,56,Excellent
+27,83,68,44,3.51,Data Structures and Algorithms,5,Excellent
+33,61,54,42,3.06,Cyber Security,17,Excellent
+6,94,71,63,1.55,Software Engineering,56,Good
+17,52,47,61,3.83,Software Engineering,40,Excellent
+33,88,91,86,2.95,Data Structures and Algorithms,45,Excellent
+14,69,54,34,3.33,Networking,50,Good
+7,84,43,59,3.63,Networking,19,Excellent
+41,64,77,94,3.78,Data Structures and Algorithms,16,Excellent
+13,54,78,97,2.05,Web App Development,59,Good
+41,76,72,99,3.96,Software Engineering,47,Excellent
+28,50,91,54,3.36,Web App Development,5,Excellent
+12,59,92,83,3.02,Machine Learning,46,Excellent
+14,82,86,70,1.97,Software Engineering,4,Excellent
+10,44,34,83,3.92,Software Engineering,50,Good
+13,74,49,90,2.15,Cloud Computing,36,Good
+22,56,32,61,2.66,Cyber Security,14,Good
+29,48,97,43,3.65,Networking,12,Excellent
+7,98,58,38,1.61,Software Engineering,35,Good
+16,81,38,69,3.83,Networking,12,Excellent
+38,63,67,34,1.62,Machine Learning,19,Excellent
+10,76,89,77,3.21,Networking,6,Excellent
+17,56,69,74,2.7,Web App Development,30,Excellent
+7,95,69,69,2.91,Web App Development,46,Excellent
+37,45,48,69,2.11,Cloud Computing,49,Excellent
+17,82,74,82,3.2,Cyber Security,28,Excellent
+42,99,36,34,3.7,Machine Learning,59,Excellent
+35,62,71,39,3.55,Web App Development,54,Excellent
+34,78,60,31,3.58,Data Structures and Algorithms,30,Excellent
+16,78,95,42,3.04,Machine Learning,50,Excellent
+21,79,89,93,2.85,Networking,36,Excellent
+10,58,59,92,2.48,Machine Learning,16,Good
+34,76,51,97,1.93,Cyber Security,37,Excellent
+8,66,93,46,3.43,Web App Development,18,Excellent
+14,93,94,51,3.05,Machine Learning,19,Excellent
+18,86,58,65,3.12,Networking,53,Excellent
+16,46,58,40,3.55,Cloud Computing,48,Good
+19,71,80,87,1.5,Cloud Computing,35,Excellent
+38,68,33,42,3.64,Web App Development,16,Excellent
+33,68,61,31,3.43,Cloud Computing,21,Excellent
+26,50,56,96,3.88,Data Structures and Algorithms,45,Excellent
+32,68,50,76,2.55,Cyber Security,21,Excellent
+10,58,86,98,3.96,Cloud Computing,2,Excellent
+42,54,63,90,2,Cloud Computing,50,Excellent
+29,63,41,47,3.66,Data Structures and Algorithms,17,Excellent
+31,47,89,75,2.01,Cyber Security,30,Excellent
+12,54,56,75,2.83,Machine Learning,8,Good
+7,68,93,73,1.58,Cyber Security,59,Good
+7,59,75,44,2.7,Software Engineering,15,Good
+11,56,38,67,2.06,Web App Development,23,Average
+6,63,40,93,2.64,Web App Development,9,Good
+25,57,93,67,2.23,Software Engineering,46,Excellent
+29,72,70,37,3.31,Data Structures and Algorithms,52,Excellent
+28,80,46,75,1.86,Software Engineering,17,Excellent
+26,67,49,62,2.9,Machine Learning,33,Excellent
+37,41,62,59,1.58,Machine Learning,53,Good
+30,61,95,67,2.92,Web App Development,47,Excellent
+19,73,73,78,3.88,Machine Learning,4,Excellent
+10,48,35,61,2.25,Web App Development,13,Average
+12,47,79,91,3.46,Software Engineering,48,Excellent
+11,50,33,35,3.54,Software Engineering,27,Good
+7,80,89,43,1.7,Cloud Computing,55,Good
+16,62,41,42,2.7,Cloud Computing,52,Good
+23,94,74,37,3.68,Software Engineering,54,Excellent
+36,90,73,99,3.3,Web App Development,23,Excellent
+41,71,85,88,3.13,Software Engineering,11,Excellent
+39,68,83,92,2.01,Software Engineering,8,Excellent
+16,88,60,87,3.36,Networking,21,Excellent
+41,43,49,89,1.6,Data Structures and Algorithms,50,Excellent
+36,80,65,95,2.99,Software Engineering,37,Excellent
+10,78,71,87,3.78,Machine Learning,13,Excellent
+7,84,47,69,3.59,Web App Development,34,Excellent
+39,65,37,71,2.09,Data Structures and Algorithms,15,Excellent
+6,94,66,98,1.67,Cloud Computing,42,Excellent
+18,95,31,99,3.13,Cyber Security,26,Excellent
+32,41,64,34,2.31,Web App Development,41,Good
+16,95,65,74,2.09,Machine Learning,32,Excellent
+15,49,96,43,2.33,Web App Development,30,Good
+14,51,30,34,2.12,Cloud Computing,44,Average
+16,40,86,93,2.4,Machine Learning,29,Good
+41,86,66,78,3.61,Machine Learning,45,Excellent
+32,86,35,90,1.59,Cyber Security,15,Excellent
+6,48,66,49,1.63,Web App Development,2,Average
+39,45,88,98,1.76,Networking,52,Excellent
+18,51,49,82,2.7,Cyber Security,44,Good
+38,64,79,58,3.67,Networking,32,Excellent
+27,83,67,52,1.57,Cyber Security,46,Excellent
+20,89,37,30,3.33,Web App Development,30,Excellent
+36,77,34,76,3.23,Software Engineering,56,Excellent
+30,82,59,46,3.58,Software Engineering,48,Excellent
+44,88,75,97,3.19,Cloud Computing,20,Excellent
+35,55,43,82,3.17,Cyber Security,42,Excellent
+30,67,95,93,1.62,Data Structures and Algorithms,10,Excellent
+37,80,77,42,3.46,Cyber Security,14,Excellent
+35,80,97,33,3.17,Cyber Security,7,Excellent
+38,57,42,52,2.59,Cyber Security,12,Excellent
+5,63,83,44,3.08,Networking,59,Good
+11,54,50,48,2.47,Cloud Computing,26,Average
+37,88,64,73,1.54,Software Engineering,12,Excellent
+39,47,95,75,2.75,Cloud Computing,22,Excellent
+30,47,77,95,2.7,Cloud Computing,54,Excellent
+33,65,54,41,1.87,Cloud Computing,49,Good
+41,54,73,44,2.49,Software Engineering,24,Excellent
+10,85,72,50,1.99,Software Engineering,56,Good
+20,86,44,54,3.14,Cyber Security,52,Excellent
+19,43,50,42,2.38,Cloud Computing,35,Average
+18,43,81,56,3.82,Data Structures and Algorithms,29,Excellent
+39,47,45,65,3.29,Networking,3,Excellent
+17,43,36,68,2.81,Networking,8,Good
+40,59,97,36,3.54,Software Engineering,45,Excellent
+17,94,51,50,3.71,Web App Development,10,Excellent
+30,48,44,39,1.94,Web App Development,58,Good
+12,63,78,55,2.14,Web App Development,5,Good
+28,58,89,68,3.17,Machine Learning,19,Excellent
+23,75,84,98,1.92,Cyber Security,36,Excellent
+38,72,50,51,1.56,Web App Development,16,Excellent
+39,67,61,40,2.08,Cyber Security,15,Excellent
+17,96,54,31,2.19,Web App Development,8,Excellent
+25,57,96,71,2.57,Data Structures and Algorithms,40,Excellent
+15,78,53,89,3.55,Cyber Security,5,Excellent
+30,77,71,61,2.19,Web App Development,47,Excellent
+40,79,65,32,2.5,Networking,34,Excellent
+10,80,97,42,2.8,Software Engineering,3,Excellent
+9,83,56,61,2.85,Cyber Security,39,Excellent
+12,89,96,73,2.31,Networking,4,Excellent
+26,45,31,73,3.15,Networking,18,Good
+39,73,59,37,2.95,Networking,59,Excellent
+40,44,60,76,2,Machine Learning,17,Excellent
+34,96,84,45,1.5,Software Engineering,17,Excellent
+16,47,32,45,2.46,Software Engineering,24,Average
+32,90,34,94,3.61,Cloud Computing,22,Excellent
+24,45,51,61,1.82,Machine Learning,17,Good
+16,77,43,65,2.26,Networking,51,Good
+6,80,31,94,2.26,Software Engineering,53,Good
+27,65,97,84,1.9,Software Engineering,23,Excellent
+19,61,89,41,3.83,Networking,43,Excellent
+42,57,74,64,3.19,Networking,43,Excellent
+34,53,35,96,3.48,Web App Development,53,Excellent
+18,48,44,50,1.56,Web App Development,28,Average
+6,74,49,39,3.56,Cyber Security,26,Good
+37,75,43,94,3.02,Cyber Security,55,Excellent
+7,74,70,35,1.87,Cyber Security,54,Average
+38,47,50,97,1.84,Web App Development,5,Excellent
+16,71,42,60,2.77,Networking,19,Good
+33,99,92,35,1.5,Cyber Security,44,Excellent
+6,99,52,60,1.65,Software Engineering,20,Good
+38,49,31,40,3.39,Web App Development,32,Excellent
+19,48,38,50,1.8,Cyber Security,47,Average
+11,55,45,33,3.08,Software Engineering,41,Good
+21,76,81,81,3.14,Cyber Security,39,Excellent
+43,89,92,92,2.62,Data Structures and Algorithms,36,Excellent
+11,66,43,34,1.53,Networking,3,Average
+31,60,50,39,3.2,Networking,57,Excellent
+43,44,94,42,1.53,Cyber Security,51,Excellent
+25,92,74,61,2.72,Data Structures and Algorithms,36,Excellent
+15,60,81,84,1.87,Cyber Security,5,Good
+38,91,81,58,2.65,Cloud Computing,22,Excellent
+17,88,93,46,3.15,Cloud Computing,42,Excellent
+5,41,89,77,2.14,Networking,11,Average
+44,60,57,63,2.47,Machine Learning,23,Excellent
+12,88,46,89,2.63,Cloud Computing,46,Excellent
+23,44,61,73,2.78,Cloud Computing,38,Good
+12,52,72,30,1.68,Cyber Security,25,Average
+39,63,46,34,2.77,Web App Development,41,Excellent
+35,85,40,81,3.44,Web App Development,8,Excellent
+32,90,87,34,2.87,Data Structures and Algorithms,55,Excellent
+36,47,93,39,1.55,Web App Development,33,Good
+32,56,37,54,3.94,Software Engineering,16,Excellent
+7,88,65,97,3.44,Machine Learning,42,Excellent
+29,97,91,39,3.5,Cloud Computing,13,Excellent
+31,79,31,42,2.96,Machine Learning,32,Excellent
+20,71,61,40,1.61,Software Engineering,18,Good
+44,57,84,54,2.44,Cloud Computing,15,Excellent
+29,89,51,59,3.82,Data Structures and Algorithms,45,Excellent
+36,90,75,50,2.21,Software Engineering,33,Excellent
+34,94,68,41,3.8,Software Engineering,19,Excellent
+25,52,50,37,3.37,Machine Learning,47,Excellent
+11,62,51,51,2.85,Cyber Security,14,Good
+22,41,58,81,3.54,Machine Learning,32,Excellent
+19,90,52,73,3.33,Networking,44,Excellent
+41,72,85,32,2.24,Machine Learning,20,Excellent
+27,68,59,68,2.94,Web App Development,26,Excellent
+41,86,37,87,1.52,Software Engineering,2,Excellent
+9,42,94,33,1.75,Machine Learning,33,Average
+38,82,39,50,3.33,Software Engineering,40,Excellent
+31,66,95,70,2.44,Networking,10,Excellent
+40,61,87,83,3.58,Web App Development,15,Excellent
+18,96,63,82,2.42,Software Engineering,12,Excellent
+20,90,99,85,2.76,Machine Learning,59,Excellent
+8,86,33,49,3.45,Software Engineering,55,Excellent
+39,65,66,83,3.24,Cloud Computing,22,Excellent
+14,77,75,33,1.95,Networking,46,Good
+24,56,33,43,3.31,Web App Development,38,Good
+20,97,84,33,1.63,Cyber Security,25,Excellent
+38,69,48,60,1.56,Software Engineering,20,Excellent
+23,61,53,59,3.95,Machine Learning,54,Excellent
+35,75,93,48,2.6,Web App Development,37,Excellent
+34,94,84,47,2.43,Machine Learning,50,Excellent
+32,98,76,86,3.83,Machine Learning,46,Excellent
+37,56,99,33,2.74,Software Engineering,48,Excellent
+31,54,99,76,3.6,Machine Learning,12,Excellent
+43,48,45,98,1.96,Software Engineering,11,Excellent
+7,52,99,80,3.85,Cyber Security,43,Excellent
+39,85,55,98,3.6,Cloud Computing,38,Excellent
+24,88,50,93,2.71,Machine Learning,7,Excellent
+30,43,68,64,2.59,Machine Learning,58,Excellent
+40,45,70,83,2.06,Machine Learning,45,Excellent
+35,59,53,65,1.53,Data Structures and Algorithms,25,Good
+34,61,36,64,2.19,Data Structures and Algorithms,15,Excellent
+14,55,45,83,2.57,Web App Development,26,Good
+17,45,73,74,3.63,Cloud Computing,44,Excellent
+24,57,86,50,2.83,Cloud Computing,34,Excellent
+31,46,99,44,1.55,Data Structures and Algorithms,57,Good
+15,59,44,77,3.84,Web App Development,43,Excellent
+30,83,43,86,2.74,Data Structures and Algorithms,22,Excellent
+22,44,32,66,2.91,Cyber Security,20,Good
+29,60,41,90,1.79,Web App Development,51,Good
+8,81,62,53,1.79,Cloud Computing,35,Good
+32,97,72,70,3.48,Cloud Computing,50,Excellent
+21,73,99,99,3.62,Data Structures and Algorithms,11,Excellent
+25,44,31,51,3.62,Cyber Security,3,Good
+14,73,45,80,3.13,Data Structures and Algorithms,23,Excellent
+16,63,69,67,3.52,Networking,11,Excellent
+39,90,92,78,2,Software Engineering,8,Excellent
+25,59,55,97,3.39,Software Engineering,23,Excellent
+19,95,43,56,3.87,Cyber Security,41,Excellent
+32,65,92,95,1.66,Machine Learning,4,Excellent
+12,83,71,35,2.43,Machine Learning,24,Good
+29,98,79,72,3.44,Software Engineering,52,Excellent
+15,95,41,37,2.22,Software Engineering,29,Good
+40,76,84,38,2.49,Machine Learning,49,Excellent
+44,57,71,89,3.24,Web App Development,13,Excellent
+6,46,32,32,3.74,Machine Learning,44,Average
+44,77,62,30,1.58,Data Structures and Algorithms,9,Excellent
+41,71,77,33,3.5,Web App Development,47,Excellent
+23,71,38,41,3.35,Data Structures and Algorithms,56,Excellent
+20,40,92,50,3.31,Software Engineering,35,Excellent
+8,67,88,56,3.22,Web App Development,4,Excellent
+37,43,54,49,3.73,Data Structures and Algorithms,6,Excellent
+39,67,38,79,1.78,Data Structures and Algorithms,45,Excellent
+15,41,76,32,3.7,Web App Development,31,Good
+30,87,50,57,3.56,Cyber Security,34,Excellent
+25,74,81,63,2.37,Networking,48,Excellent
+22,97,86,52,3.05,Machine Learning,23,Excellent
+21,44,40,44,2.13,Cloud Computing,34,Average
+24,55,63,95,2.29,Data Structures and Algorithms,57,Excellent
+32,86,68,99,3.64,Machine Learning,2,Excellent
+12,94,92,96,3.24,Networking,26,Excellent
+42,54,92,50,1.58,Cloud Computing,54,Excellent
+18,75,46,68,3.52,Machine Learning,14,Excellent
+19,57,35,52,1.92,Software Engineering,35,Average
+42,53,91,64,2.53,Cloud Computing,15,Excellent
+24,88,54,69,3.35,Networking,27,Excellent
+42,62,51,77,3.27,Machine Learning,47,Excellent
+7,81,48,57,1.55,Data Structures and Algorithms,8,Average
+18,48,48,76,2.62,Cloud Computing,57,Good
+42,92,90,65,1.74,Software Engineering,31,Excellent
+13,72,81,43,3,Web App Development,36,Excellent
+18,69,70,97,1.66,Data Structures and Algorithms,29,Excellent
+12,41,70,84,2.83,Software Engineering,50,Good
+34,51,64,40,3.99,Software Engineering,51,Excellent
+25,60,98,77,3.58,Cloud Computing,4,Excellent
+37,92,90,38,3.17,Machine Learning,18,Excellent
+38,63,94,37,2.79,Web App Development,48,Excellent
+44,51,83,75,3.43,Data Structures and Algorithms,42,Excellent
+23,65,81,51,3.02,Data Structures and Algorithms,52,Excellent
+42,59,58,80,2.09,Machine Learning,8,Excellent
+32,67,33,51,3.47,Web App Development,4,Excellent
+26,83,95,63,2.68,Cloud Computing,42,Excellent
+5,47,67,35,3.73,Data Structures and Algorithms,19,Good
+21,51,35,56,1.85,Web App Development,43,Average
+5,96,69,43,3.03,Cloud Computing,46,Excellent
+24,95,78,42,2.84,Cloud Computing,50,Excellent
+12,82,49,68,3.51,Networking,50,Excellent
+13,63,66,78,3.04,Data Structures and Algorithms,25,Excellent
+25,90,88,68,2.94,Machine Learning,40,Excellent
+17,50,48,40,1.83,Cyber Security,47,Average
+5,79,48,90,3.29,Data Structures and Algorithms,13,Excellent
+37,84,98,37,3.66,Networking,47,Excellent
