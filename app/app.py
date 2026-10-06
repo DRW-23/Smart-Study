@@ -615,7 +615,7 @@ html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
-/* ─── AMBIENT FLOATING AURORA LIGHT ORBS ─── */
+/* ─── AMBIENT FLOATING AURORA LIGHT ORBS & STACKING FIX ─── */
 .stApp {
     background-color: var(--bg-primary) !important;
     background-image: 
@@ -625,6 +625,12 @@ html, body, [class*="css"] {
     color: var(--text-primary);
     position: relative;
     overflow-x: hidden;
+}
+
+/* Ensure all page content sits strictly ON TOP of background orbs */
+[data-testid="stAppViewContainer"], .main, section[data-testid="stSidebar"], .block-container {
+    position: relative;
+    z-index: 1 !important;
 }
 
 .stApp::before {
@@ -638,7 +644,7 @@ html, body, [class*="css"] {
     filter: blur(80px);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1 !important;
     animation: floatOrb1 18s ease-in-out infinite alternate;
 }
 
@@ -653,7 +659,7 @@ html, body, [class*="css"] {
     filter: blur(90px);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1 !important;
     animation: floatOrb2 22s ease-in-out infinite alternate;
 }
 
