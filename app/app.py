@@ -1638,7 +1638,7 @@ st.markdown("""
 <div style="padding: 12px 0 22px 0; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 26px;">
     <div>
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
-            <span style="font-size: 2em; filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));">🎯</span>
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35); color: #818cf8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
             <h1 style="margin: 0; line-height: 1.1; font-size: 2.3em; font-weight: 800; letter-spacing: -0.5px; color: #f8fafc;">
                 SmartStudy <span style="background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 25px rgba(99, 102, 241, 0.35);">AI</span>
             </h1>
@@ -1711,7 +1711,7 @@ if "quick_prompt" not in st.session_state:
 st.sidebar.markdown("""
 <div style="text-align: center; padding: 4px 0 16px 0;">
     <div style="font-size: 1.25em; font-weight: 800; color: #f1f5f9; letter-spacing: -0.3px;">
-        🎓 Advisor Control Panel
+        Advisor Control Panel
     </div>
     <div style="color: #64748b; font-size: 0.78em; margin-top: 2px;">
         Configure your timeline & curriculum
@@ -1785,7 +1785,7 @@ st.sidebar.markdown("---")
 
 
 # --- PLAN GENERATION ACTION ---
-generate_clicked = st.sidebar.button("✨ Generate Personalized Study Plan", use_container_width=True)
+generate_clicked = st.sidebar.button("Generate Personalized Study Plan", use_container_width=True)
 
 if generate_clicked:
     st.session_state.exam_days = exam_days
@@ -1796,7 +1796,7 @@ if generate_clicked:
     warnings_list = check_academic_rules(exam_days, daily_hours)
     if warnings_list:
         for w in warnings_list:
-            st.markdown(f'<div class="warning-banner"><span class="wb-icon">🔥</span><span class="wb-text">{w.replace("🚨 BURNOUT ALERT: ", "")}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="warning-banner"><span class="wb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span class="wb-text">{w.replace("🚨 BURNOUT ALERT: ", "")}</span></div>', unsafe_allow_html=True)
 
     module_syllabus = SUBJECT_SYLLABUS.get(target_subject, ["Core Concepts", "Practical Tasks"])
     total_hours = exam_days * daily_hours
@@ -1838,7 +1838,7 @@ if generate_clicked:
 
     try:
         # STEP 1: Overview
-        progress_bar.progress(1 / total_steps, text="📊 Analyzing timeline & strategy overview...")
+        progress_bar.progress(1 / total_steps, text="Analyzing timeline & strategy overview...")
         overview_raw = ask_model(
             f"""You are a KDU Academic Advisor. The student is studying {target_subject}.
 They are a {confidence} student with {exam_days} days left and {daily_hours} hours/day ({total_hours} hours total).
@@ -1874,7 +1874,7 @@ Strategy: [2-3 sentences: which topic to start with and why, what to skip if pre
                 day_label = f"Days {current_start}–{end_day}"
 
             step = i + 2
-            progress_bar.progress(step / total_steps, text=f"📚 Synthesizing Phase {i+1}/{n_topics}: {topic[:45]}...")
+            progress_bar.progress(step / total_steps, text=f"Synthesizing Phase {i+1}/{n_topics}: {topic[:45]}...")
 
             phase_raw = ask_model(
                 f"""You are a KDU Academic Advisor. Write a study section for ONE topic only.
@@ -1951,7 +1951,7 @@ Tasks:
             current_start = end_day + 1
 
         # STEP 3: Tips
-        progress_bar.progress((total_steps - 1) / total_steps, text="💡 Compiling KDU exam survival techniques...")
+        progress_bar.progress((total_steps - 1) / total_steps, text="Compiling KDU exam survival techniques...")
         tips_raw_response = ask_model(
             f"""You are a KDU Academic Advisor. Write exam tips for {target_subject}.
 Reply in EXACTLY this format:
@@ -1983,7 +1983,7 @@ Night before:
             elif current_field == 'night' and (line.startswith('-') or line.startswith('*')):
                 plan_data['tips']['night'].append(line.lstrip('-* ').strip())
 
-        progress_bar.progress(1.0, text="✅ Roadmap generated successfully!")
+        progress_bar.progress(1.0, text="Roadmap generated successfully!")
         progress_bar.empty()
 
         st.session_state.generated_plan = plan_data
@@ -1999,7 +1999,7 @@ Night before:
 # ─── MAIN CANVAS RENDERING ───
 if st.session_state.generated_plan:
     # ── STATE 1: PLAN GENERATED (TABBED DASHBOARD) ──
-    st.markdown('<div class="success-banner"><span class="sb-check">🎉</span><span class="sb-text">Personalized Study Roadmap Generated Successfully!</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="success-banner"><span class="sb-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span><span class="sb-text">Personalized Study Roadmap Generated Successfully!</span></div>', unsafe_allow_html=True)
 
     # Metric KPI Highlights
     ov = st.session_state.generated_plan.get('overview', {})
@@ -2021,26 +2021,26 @@ if st.session_state.generated_plan:
         </div>
         <div class="metric-pill">
             <div class="mp-label">Target Readiness</div>
-            <div class="mp-val">📈 {st.session_state.confidence}</div>
+            <div class="mp-val">{st.session_state.confidence}</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
     # Four Organized Tabs
     tab_roadmap, tab_tips, tab_resources, tab_advisor = st.tabs([
-        "📅 Study Roadmap & Tasks",
-        "💡 Exam Strategy & Tips",
-        "📚 Curated Resources & Past Papers",
-        "💬 Ask Academic Advisor"
+        "Study Roadmap & Tasks",
+        "Exam Strategy & Tips",
+        "Curated Resources & Past Papers",
+        "Ask Academic Advisor"
     ])
 
     # ── TAB 1: ROADMAP & TASKS ──
     with tab_roadmap:
         # Overview Card
-        risk_html   = f'<p><span class="label">📊 Academic Situation Assessment</span>{ov.get("risk", "")}</p>' if ov.get('risk') else ''
+        risk_html   = f'<p><span class="label">Academic Situation Assessment</span>{ov.get("risk", "")}</p>' if ov.get('risk') else ''
         budget_html = f'<p><span class="label">⏳ Total Allocation</span>{ov.get("budget", "")}</p>' if ov.get('budget') else ''
-        strat_html  = f'<p><span class="label">🎯 Recommended Strategy</span>{ov.get("strategy", "")}</p>' if ov.get('strategy') else ''
-        st.markdown(f'<div class="overview-card"><h3>🎯 Academic Strategy Overview</h3>{risk_html}{budget_html}{strat_html}</div>', unsafe_allow_html=True)
+        strat_html  = f'<p><span class="label">Recommended Strategy</span>{ov.get("strategy", "")}</p>' if ov.get('strategy') else ''
+        st.markdown(f'<div class="overview-card"><h3>Academic Strategy Overview</h3>{risk_html}{budget_html}{strat_html}</div>', unsafe_allow_html=True)
 
         phases = st.session_state.generated_plan.get('phases', [])
         
@@ -2058,7 +2058,7 @@ if st.session_state.generated_plan:
         st.markdown(f"""
         <div class="progress-card">
             <div class="progress-card-header">
-                <span class="progress-card-title">🏆 Your Roadmap Completion</span>
+                <span class="progress-card-title">Your Roadmap Completion</span>
                 <span class="progress-card-stat">{completed_count} of {total_tasks_count} Action Steps Completed ({completion_pct}%)</span>
             </div>
         </div>
@@ -2073,14 +2073,14 @@ if st.session_state.generated_plan:
             # Sanitization of explain
             raw_explain_str = phase.get('explain', '')
             raw_explain = sanitize_llm_output(raw_explain_str).replace('<', '&lt;').replace('>', '&gt;')
-            explain_html = f'<div class="section-label">📖 What This Topic Is About</div><div class="explain-text">{raw_explain}</div>' if raw_explain else ''
+            explain_html = f'<div class="section-label">What This Topic Is About</div><div class="explain-text">{raw_explain}</div>' if raw_explain else ''
 
             # Concepts
             raw_concepts = phase.get('concepts', [])
             concepts_html = ''
             if raw_concepts:
                 tags = ''.join([f'<span class="concept-tag">{sanitize_llm_output(c).replace("<", "&lt;").replace(">", "&gt;")}</span>' for c in raw_concepts if c])
-                concepts_html = f'<div class="section-label">🎯 Must Know for Exam</div><div>{tags}</div>'
+                concepts_html = f'<div class="section-label">Must Know for Exam</div><div>{tags}</div>'
 
             # Phase Container
             st.markdown(f"""
@@ -2089,7 +2089,7 @@ if st.session_state.generated_plan:
                 {day_badge}
                 {explain_html}
                 {concepts_html}
-                <div class="section-label" style="margin-top: 20px;">✅ Action Steps (Check off as you complete)</div>
+                <div class="section-label" style="margin-top: 20px;">Action Steps</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -2116,17 +2116,17 @@ if st.session_state.generated_plan:
     with tab_tips:
         tips = st.session_state.generated_plan.get('tips', {})
         if any([tips.get('score'), tips.get('mistake'), tips.get('night')]):
-            score_html   = f'<p>🏆 <strong>High-Scoring Technique:</strong> {tips["score"]}</p>' if tips.get('score') else ''
-            mistake_html = f'<p>⚠️ <strong>Most Frequent Student Mistake:</strong> {tips["mistake"]}</p>' if tips.get('mistake') else ''
+            score_html   = f'<p><strong>High-Scoring Technique:</strong> {tips["score"]}</p>' if tips.get('score') else ''
+            mistake_html = f'<p><strong>Most Frequent Student Mistake:</strong> {tips["mistake"]}</p>' if tips.get('mistake') else ''
             night_items  = ''.join([f'<li>{n}</li>' for n in tips.get('night', [])])
-            night_html   = f'<p>📝 <strong>Night Before Preparation:</strong><ul>{night_items}</ul></p>' if night_items else ''
-            st.markdown(f'<div class="tips-card"><h3>💡 KDU Exam Survival Guide</h3>{score_html}{mistake_html}{night_html}</div>', unsafe_allow_html=True)
+            night_html   = f'<p><strong>Night Before Preparation:</strong><ul>{night_items}</ul></p>' if night_items else ''
+            st.markdown(f'<div class="tips-card"><h3>KDU Exam Survival Guide</h3>{score_html}{mistake_html}{night_html}</div>', unsafe_allow_html=True)
         else:
             st.info("No specific exam tips were generated for this run.")
 
     # ── TAB 3: RESOURCES & PAST PAPERS ──
     with tab_resources:
-        st.markdown('<h3 style="color: #f8fafc; margin-bottom: 8px;">📚 Curated References & Library Resources</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #f8fafc; margin-bottom: 8px;">Curated References & Library Resources</h3>', unsafe_allow_html=True)
         st.markdown('<p style="color: #94a3b8; font-size: 0.9em; margin-bottom: 20px;">Direct access to lecture materials, recommended video series, and KDU past paper archives.</p>', unsafe_allow_html=True)
 
         resources = SUBJECT_RESOURCES.get(st.session_state.current_subject, {
@@ -2139,20 +2139,20 @@ if st.session_state.generated_plan:
 
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.markdown(f'<div class="resource-card"><div class="rc-icon">🎥</div><div class="rc-title">Video Lectures</div><div class="rc-body">{_yt_html}</div></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="resource-card"><div class="rc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></div><div class="rc-title">Video Lectures</div><div class="rc-body">{_yt_html}</div></div>', unsafe_allow_html=True)
         with col2:
-            st.markdown(f'<div class="resource-card"><div class="rc-icon">📖</div><div class="rc-title">Reference Docs</div><div class="rc-body">{_doc_html}</div></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="resource-card"><div class="rc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rc-title">Reference Docs</div><div class="rc-body">{_doc_html}</div></div>', unsafe_allow_html=True)
         with col3:
-            st.markdown(f'<div class="resource-card"><div class="rc-icon">📝</div><div class="rc-title">KDU Past Papers</div><div class="rc-body"><a href="http://library.kdu.ac.lk/" target="_blank">Search {module_code} in KDU Library ↗</a></div></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="resource-card"><div class="rc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><div class="rc-title">KDU Past Papers</div><div class="rc-body"><a href="http://library.kdu.ac.lk/" target="_blank">Search {module_code} in KDU Library ↗</a></div></div>', unsafe_allow_html=True)
 
-        st.caption("⚠️ _Note: Video titles suggested in the study plan are AI-generated recommendations. Search for matching topics on YouTube._")
+        st.caption("_Note: Video titles suggested in the study plan are AI-generated recommendations. Search for matching topics on YouTube._")
 
         st.markdown("---")
-        st.markdown('<h4 style="color: #f8fafc; margin-bottom: 12px;">📥 Export Study Kit</h4>', unsafe_allow_html=True)
+        st.markdown('<h4 style="color: #f8fafc; margin-bottom: 12px;">Export Study Kit</h4>', unsafe_allow_html=True)
         plan_data = st.session_state.generated_plan
         pdf_bytes = create_pdf(plan_data, st.session_state.current_subject)
         st.download_button(
-            label="📄 Download Complete Study Plan (PDF)",
+            label="Download Complete Study Plan (PDF)",
             data=bytes(pdf_bytes),
             file_name=f"{st.session_state.current_subject.split(':')[0]}_StudyPlan.pdf",
             mime="application/pdf",
@@ -2161,25 +2161,25 @@ if st.session_state.generated_plan:
 
     # ── TAB 4: ASK ACADEMIC ADVISOR ──
     with tab_advisor:
-        st.markdown('<h3 style="color: #f8fafc; margin-bottom: 6px;">💬 Ask Your KDU Academic Advisor</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #f8fafc; margin-bottom: 6px;">Ask Your KDU Academic Advisor</h3>', unsafe_allow_html=True)
         st.markdown('<p style="color: #94a3b8; font-size: 0.9em; margin-bottom: 16px;">Have questions about the topics or need practical examples? Ask below or pick a suggested prompt.</p>', unsafe_allow_html=True)
 
         # Quick Suggested Prompts
-        st.markdown("<div style='color: #64748b; font-size: 0.78em; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;'>💡 Quick Prompts</div>", unsafe_allow_html=True)
+        st.markdown("<div style='color: #64748b; font-size: 0.78em; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;'>Quick Prompts</div>", unsafe_allow_html=True)
         qp1, qp2, qp3, qp4 = st.columns(4)
         
         selected_prompt = None
         with qp1:
-            if st.button("🔍 Explain in simpler terms", key="qp_simple", use_container_width=True):
+            if st.button("Explain in simpler terms", key="qp_simple", use_container_width=True):
                 selected_prompt = f"Can you explain the core concepts of {st.session_state.current_subject} in simpler terms with real-world analogies?"
         with qp2:
-            if st.button("📝 5-Question Practice Quiz", key="qp_quiz", use_container_width=True):
+            if st.button("5-Question Practice Quiz", key="qp_quiz", use_container_width=True):
                 selected_prompt = f"Give me a 5-question exam-style practice quiz for {st.session_state.current_subject} with answers."
         with qp3:
-            if st.button("💻 Practical Code / Lab Example", key="qp_code", use_container_width=True):
+            if st.button("Practical Code / Lab Example", key="qp_code", use_container_width=True):
                 selected_prompt = f"Provide a practical code snippet or implementation example relevant to {st.session_state.current_subject}."
         with qp4:
-            if st.button("⚠️ Common Exam Traps", key="qp_traps", use_container_width=True):
+            if st.button("Common Exam Traps", key="qp_traps", use_container_width=True):
                 selected_prompt = f"What are the most dangerous exam traps and tricky questions examiners set for {st.session_state.current_subject}?"
 
         st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
@@ -2262,7 +2262,7 @@ else:
     # ── STATE 2: EMPTY STATE (WELCOME & GETTING STARTED DASHBOARD) ──
     st.markdown("""
     <div class="welcome-hero">
-        <div class="welcome-badge">✨ KDU Academic Advisory AI v2.0</div>
+        <div class="welcome-badge">KDU Academic Advisory AI v2.0</div>
         <h2 class="welcome-title">Your AI-Powered Exam Preparation Partner</h2>
         <p class="welcome-desc">
             Designed specifically for General Sir John Kotelawala Defence University (KDU) BSc (Hons) IT students.
@@ -2276,7 +2276,7 @@ else:
     with fc1:
         st.markdown("""
         <div class="feature-box">
-            <div class="fb-icon">🎓</div>
+            <div class="fb-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
             <div class="fb-title">24 KDU IT Modules</div>
             <p class="fb-desc">
                 Complete official syllabus coverage spanning Year 1 to Year 4, including Algorithms, Networking, Databases, AI, and Software Engineering.
@@ -2296,7 +2296,7 @@ else:
     with fc3:
         st.markdown("""
         <div class="feature-box">
-            <div class="fb-icon">📑</div>
+            <div class="fb-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             <div class="fb-title">Comprehensive Study Pack</div>
             <p class="fb-desc">
                 Download printable PDF roadmaps, review common exam traps, and chat live with an AI tutor fine-tuned for KDU coursework.
@@ -2310,7 +2310,7 @@ else:
     col_steps, col_popular = st.columns([1, 1], gap="large")
 
     with col_steps:
-        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 14px;">🚀 How to Get Started</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 14px;">How to Get Started</h3>', unsafe_allow_html=True)
         st.markdown("""
         <div class="step-card">
             <div class="step-num">1</div>
@@ -2336,7 +2336,7 @@ else:
         """, unsafe_allow_html=True)
 
     with col_popular:
-        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 6px;">⚡ Quick-Start High-Yield Modules</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 6px;">Quick-Start Recommended Modules</h3>', unsafe_allow_html=True)
         st.markdown('<p style="color: #94a3b8; font-size: 0.85em; margin-bottom: 14px;">Select one of the most demanding KDU exam modules to auto-configure your plan:</p>', unsafe_allow_html=True)
         
         pop1, pop2 = st.columns(2)
@@ -2351,7 +2351,7 @@ else:
                 <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">Inheritance • Polymorphism • I/O</div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button("🚀 Load OOP Plan", key="btn_oop", use_container_width=True):
+            if st.button("Load OOP Plan", key="btn_oop", use_container_width=True):
                 st.session_state.selected_semester = "Year 1 • Semester 2"
                 st.session_state.target_subject_select = "IT12023: Object Oriented Programming"
                 st.rerun()
@@ -2366,7 +2366,7 @@ else:
                 <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">OSI • TCP/IP • Subnetting • MAC</div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button("🚀 Load Networks Plan", key="btn_net", use_container_width=True):
+            if st.button("Load Networks Plan", key="btn_net", use_container_width=True):
                 st.session_state.selected_semester = "Year 1 • Semester 2"
                 st.session_state.target_subject_select = "IT12062: Computer Network Systems I"
                 st.rerun()
@@ -2382,7 +2382,7 @@ else:
                 <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">BST • Graphs • Big-O Complexity</div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button("🚀 Load DSA Plan", key="btn_dsa", use_container_width=True):
+            if st.button("Load DSA Plan", key="btn_dsa", use_container_width=True):
                 st.session_state.selected_semester = "Year 2 • Semester 2"
                 st.session_state.target_subject_select = "IT22013: Data Structures and Algorithms"
                 st.rerun()
@@ -2397,14 +2397,14 @@ else:
                 <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">CPU Scheduling • Deadlocks • Paging</div>
             </div>
             """, unsafe_allow_html=True)
-            if st.button("🚀 Load OS Plan", key="btn_os", use_container_width=True):
+            if st.button("Load OS Plan", key="btn_os", use_container_width=True):
                 st.session_state.selected_semester = "Year 2 • Semester 2"
                 st.session_state.target_subject_select = "IT22032: Operating Systems"
                 st.rerun()
 
         st.markdown("""
         <div style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: 14px; padding: 14px 18px; margin-top: 16px; display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.2em;">💡</span>
+            <span style="display: inline-flex; align-items: center; color: #818cf8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></span>
             <span style="color: #cbd5e1; font-size: 0.83em; line-height: 1.5;">
                 <strong style="color: #a5b4fc;">Pro Tip:</strong> Click any module above or use the sidebar on the left to set custom days and capacity before generating your plan.
             </span>

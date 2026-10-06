@@ -5,13 +5,33 @@ This document tracks all project setup actions, code modifications, UI/UX overha
 ---
 
 ## 📌 Change Log Index
+- [2026-10-06 — v2.2.1: Professional Iconography & Emoji Cleanup](#2026-10-06--v221-professional-iconography--emoji-cleanup)
 - [2026-10-06 — v2.2.0: Advanced Visual Effects & Premium Micro-Animations](#2026-10-06--v220-advanced-visual-effects--premium-micro-animations)
 - [2026-10-06 — v2.1.0: Complete UI/UX Overhaul & Interactive Features](#2026-10-06--v210-complete-uiux-overhaul--interactive-features)
 - [2026-10-06 — v2.0.0: Initial Project Clone, Environment Setup & Model Configuration](#2026-10-06--v200-initial-project-clone-environment-setup--model-configuration)
 
 ---
 
-## [2026-10-06 — v2.2.0: Advanced Visual Effects & Premium Micro-Animations]
+## [2026-10-06 — v2.2.1: Professional Iconography & Emoji Cleanup]
+
+### 🎯 Purpose
+Replace casual emoji icons across all headers, cards, buttons, tabs, and alerts with clean typography and sleek inline SVG vector icons for a professional, academic aesthetic.
+
+### 📂 Files Modified
+- [`app/app.py`](file:///C:/Users/user/.gemini/antigravity-ide/scratch/Smart-Study/app/app.py) — Removed casual emojis from 35+ UI elements, replaced key icons with SVG vectors
+- [`CHANGELOG.md`](file:///C:/Users/user/.gemini/antigravity-ide/scratch/Smart-Study/CHANGELOG.md) — Added this v2.2.1 entry
+
+### 📝 Summary of Changes
+- **Header & Sidebar**: Replaced header emoji logo with a sleek SVG academic cap/layer icon badge and updated sidebar title to clean typography.
+- **Buttons & Banners**: Removed emojis from sidebar action button, quick-prompt chips, success banners, warning banners, and download PDF button.
+- **Navigation Tabs**: Cleaned tab titles (`Study Roadmap & Tasks`, `Exam Strategy & Tips`, `Curated Resources & Past Papers`, `Ask Academic Advisor`).
+- **Cards & Section Labels**: Stripped emojis from overview cards, progress completion cards, phase labels, tips card, and welcome dashboard modules.
+- **Resource Cards**: Replaced casual emoji placeholders with crisp vector SVG icons (video camera, document page, library archive).
+- **Backend Integrity**: Preserved backend `sanitize_llm_output` parsing string rules so LLM task extraction remains fully functional.
+
+---
+
+
 
 ### 🎯 Purpose
 Elevate the visual experience from polished to **premium-tier** with 18+ new CSS animations, ambient effects, and interactive micro-interactions. Transform the UI from a functional dark-mode dashboard into a living, breathing interface with depth, motion, and delight.
