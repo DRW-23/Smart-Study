@@ -1652,7 +1652,7 @@ st.markdown("""
             <span class="live-dot"></span> Ollama RTX 4060 GPU Active
         </span>
         <span style="background: rgba(99, 102, 241, 0.16); border: 1px solid rgba(99, 102, 241, 0.35); color: #c7d2fe; padding: 5px 14px; border-radius: 20px; font-size: 0.78em; font-weight: 700; box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);">
-            KDU Edition v2.2
+            KDU Edition v2.2.1
         </span>
     </div>
 </div>
@@ -1796,7 +1796,7 @@ if generate_clicked:
     warnings_list = check_academic_rules(exam_days, daily_hours)
     if warnings_list:
         for w in warnings_list:
-            st.markdown(f'<div class="warning-banner"><span class="wb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span class="wb-text">{w.replace("🚨 BURNOUT ALERT: ", "")}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="warning-banner"><span class="wb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span class="wb-text">{w}</span></div>', unsafe_allow_html=True)
 
     module_syllabus = SUBJECT_SYLLABUS.get(target_subject, ["Core Concepts", "Practical Tasks"])
     total_hours = exam_days * daily_hours
@@ -2013,11 +2013,11 @@ if st.session_state.generated_plan:
         </div>
         <div class="metric-pill">
             <div class="mp-label">Exam Timeline</div>
-            <div class="mp-val">⏳ {st.session_state.exam_days} Days Left</div>
+            <div class="mp-val">{st.session_state.exam_days} Days Left</div>
         </div>
         <div class="metric-pill">
             <div class="mp-label">Time Budget</div>
-            <div class="mp-val">⏱️ {st.session_state.daily_hours}h/day ({total_study_hours}h total)</div>
+            <div class="mp-val">{st.session_state.daily_hours}h/day &bull; {total_study_hours}h total</div>
         </div>
         <div class="metric-pill">
             <div class="mp-label">Target Readiness</div>
@@ -2038,7 +2038,7 @@ if st.session_state.generated_plan:
     with tab_roadmap:
         # Overview Card
         risk_html   = f'<p><span class="label">Academic Situation Assessment</span>{ov.get("risk", "")}</p>' if ov.get('risk') else ''
-        budget_html = f'<p><span class="label">⏳ Total Allocation</span>{ov.get("budget", "")}</p>' if ov.get('budget') else ''
+        budget_html = f'<p><span class="label">Total Time Allocation</span>{ov.get("budget", "")}</p>' if ov.get('budget') else ''
         strat_html  = f'<p><span class="label">Recommended Strategy</span>{ov.get("strategy", "")}</p>' if ov.get('strategy') else ''
         st.markdown(f'<div class="overview-card"><h3>Academic Strategy Overview</h3>{risk_html}{budget_html}{strat_html}</div>', unsafe_allow_html=True)
 
@@ -2068,7 +2068,7 @@ if st.session_state.generated_plan:
 
         # Render Phases
         for i, phase in enumerate(phases):
-            day_badge = f'<span class="when-badge">⏱️ {phase["day"]}</span>' if phase.get('day') else ''
+            day_badge = f'<span class="when-badge">{phase["day"]}</span>' if phase.get('day') else ''
 
             # Sanitization of explain
             raw_explain_str = phase.get('explain', '')
@@ -2286,7 +2286,7 @@ else:
     with fc2:
         st.markdown("""
         <div class="feature-box">
-            <div class="fb-icon">⏱️</div>
+            <div class="fb-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
             <div class="fb-title">Adaptive Timeline</div>
             <p class="fb-desc">
                 Custom time-budgeting that balances theory, coding labs, and self-testing across your exact days remaining and daily hours.
