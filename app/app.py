@@ -586,164 +586,1103 @@ def create_pdf(plan_data, subject_name):
 
 
 # Streamlit Page Setup
-st.set_page_config(page_title="SmartStudy AI - KDU", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="SmartStudy AI - KDU Academic Advisor", layout="wide", initial_sidebar_state="expanded")
 
 # ─── GLOBAL CSS INJECTION ───
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Root */
-html, body, [class*="css"] { font-family: 'Inter', sans-serif !important; }
-.stApp { background: #1a1a2e; }
+/* Root & Theme Setup */
+:root {
+    --bg-primary: #0a0815;
+    --bg-card: rgba(19, 16, 36, 0.72);
+    --bg-card-hover: rgba(26, 22, 48, 0.88);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(99, 102, 241, 0.35);
+    --border-glow: rgba(99, 102, 241, 0.6);
+    --accent-indigo: #6366f1;
+    --accent-violet: #8b5cf6;
+    --accent-cyan: #38bdf8;
+    --accent-emerald: #22c55e;
+    --accent-amber: #f59e0b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ─── AMBIENT FLOATING AURORA LIGHT ORBS & STACKING FIX ─── */
+.stApp {
+    background-color: var(--bg-primary) !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.04) 0%, transparent 50%) !important;
+    color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Ensure all page content sits strictly ON TOP of background orbs */
+[data-testid="stAppViewContainer"], .main, section[data-testid="stSidebar"], .block-container {
+    position: relative;
+    z-index: 1 !important;
+}
+
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+    filter: blur(80px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1 !important;
+    animation: floatOrb1 18s ease-in-out infinite alternate;
+}
+
+.stApp::after {
+    content: "";
+    position: fixed;
+    bottom: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(139, 92, 246, 0.06) 50%, transparent 70%);
+    filter: blur(90px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1 !important;
+    animation: floatOrb2 22s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.12); }
+    100% { transform: translate(20px, 80px) scale(0.95); }
+}
+
+@keyframes floatOrb2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-50px, -30px) scale(1.08); }
+    100% { transform: translate(-20px, -60px) scale(0.92); }
+}
+
 #MainMenu, footer { visibility: hidden; }
-[data-testid="stHeader"] { background: #1a1a2e !important; }
+[data-testid="stHeader"] { background: transparent !important; }
 
-/* Sidebar */
+/* ─── SIDEBAR MODERNIZATION ─── */
 section[data-testid="stSidebar"] {
-    background: #16162a !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(14, 11, 28, 0.95) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    border-right: 1px solid var(--border-subtle) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35) !important;
 }
-section[data-testid="stSidebar"] .stMarkdown h2 {
-    font-size: 0.82em !important; letter-spacing: 0.8px;
-    color: #e2e8f0 !important; text-transform: uppercase; font-weight: 700;
+
+section[data-testid="stSidebar"] .stMarkdown h2, 
+section[data-testid="stSidebar"] h2 {
+    font-size: 0.80em !important;
+    letter-spacing: 1.2px !important;
+    color: var(--text-secondary) !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+    margin-top: 10px !important;
 }
+
 section[data-testid="stSidebar"] hr {
-    border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 16px 0;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 16px 0;
 }
+
 section[data-testid="stSidebar"] label {
-    color: #94a3b8 !important; font-weight: 500 !important;
-    font-size: 0.82em !important; letter-spacing: 0.3px;
+    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+    font-size: 0.82em !important;
+    letter-spacing: 0.3px;
 }
+
+/* Sidebar Primary Action Button with Radiant Shimmer */
 section[data-testid="stSidebar"] .stButton > button {
-    background: #e8622c !important;
-    color: #ffffff !important; border: none !important;
-    border-radius: 10px !important; padding: 14px 20px !important;
-    font-weight: 700 !important; font-size: 0.95em !important;
-    letter-spacing: 0.5px;
-    transition: all 0.2s ease !important;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #7c3aed 100%) !important;
+    background-size: 200% 200% !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 14px 20px !important;
+    font-weight: 700 !important;
+    font-size: 0.95em !important;
+    letter-spacing: 0.4px;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
+
 section[data-testid="stSidebar"] .stButton > button:hover {
-    background: #d4551f !important;
-    transform: translateY(-1px) !important;
+    background-position: 100% 50% !important;
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6), 0 0 12px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* Progress Bar */
+section[data-testid="stSidebar"] .stButton > button:active {
+    transform: translateY(0px) scale(0.99) !important;
+}
+
+/* ─── TABS STYLING WITH LUMINOUS ACTIVE STATE ─── */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px;
+    border-radius: 14px;
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 24px;
+    backdrop-filter: blur(12px);
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 44px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9em;
+    padding: 8px 20px;
+    border: none !important;
+    background: transparent;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stTabs [aria-selected="true"] {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* ─── PROGRESS BAR WITH NEON GLOW ─── */
 .stProgress > div > div > div {
-    background: #2563eb !important;
+    background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #38bdf8 100%) !important;
     border-radius: 8px;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5) !important;
 }
 
-/* Download Button */
+/* ─── DOWNLOAD BUTTON ─── */
 .stDownloadButton > button {
-    background: #16a34a !important;
-    color: #ffffff !important; border: none !important;
-    border-radius: 10px !important; padding: 14px 24px !important;
-    font-weight: 700 !important; font-size: 1em !important;
-    transition: all 0.2s ease !important;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 14px 24px !important;
+    font-weight: 700 !important;
+    font-size: 0.98em !important;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .stDownloadButton > button:hover {
-    background: #15803d !important;
-    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 0 8px 28px rgba(16, 185, 129, 0.5), 0 0 14px rgba(16, 185, 129, 0.3) !important;
 }
 
-/* Chat */
-[data-testid="stChatMessage"] {
-    background: rgba(255, 255, 255, 0.04) !important;
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding: 16px !important; margin-bottom: 10px;
-}
-[data-testid="stChatInput"] > div {
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    background: rgba(22, 22, 42, 0.9) !important;
-    transition: border-color 0.2s ease;
-}
-[data-testid="stChatInput"] > div:focus-within {
-    border-color: #2563eb !important;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
-}
-
-/* Alerts */
-[data-testid="stAlert"] [role="alert"] {
-    border-radius: 10px !important;
-}
-
-/* Custom Success Banner */
+/* ─── DARK-MODE ALERT BANNERS ─── */
 .success-banner {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-left: 4px solid #16a34a; border-radius: 10px;
-    padding: 16px 22px; margin-bottom: 24px;
-    display: flex; align-items: center; gap: 10px;
+    background: rgba(34, 197, 94, 0.10) !important;
+    border: 1px solid rgba(34, 197, 94, 0.3) !important;
+    border-left: 4px solid #22c55e !important;
+    border-radius: 14px;
+    padding: 16px 22px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: fadeInSlide 0.4s ease-out;
 }
-.success-banner .sb-check { font-size: 1.2em; }
-.success-banner .sb-text { color: #166534; font-weight: 600; font-size: 0.95em; letter-spacing: 0.3px; }
+.success-banner .sb-check { font-size: 1.3em; filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6)); }
+.success-banner .sb-text { color: #86efac; font-weight: 600; font-size: 0.95em; letter-spacing: 0.3px; }
 
-/* Custom Warning Banner */
 .warning-banner {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    border-left: 4px solid #dc2626; border-radius: 10px;
-    padding: 16px 22px; margin-bottom: 24px;
-    display: flex; align-items: center; gap: 12px;
+    background: rgba(239, 68, 68, 0.12) !important;
+    border: 1px solid rgba(239, 68, 68, 0.35) !important;
+    border-left: 4px solid #ef4444 !important;
+    border-radius: 14px;
+    padding: 16px 22px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.12);
+    animation: fadeInSlide 0.4s ease-out;
 }
-.warning-banner .wb-icon { font-size: 1.4em; }
-.warning-banner .wb-text { color: #991b1b; font-weight: 600; font-size: 0.95em; letter-spacing: 0.3px; line-height: 1.4; }
+.warning-banner .wb-icon { font-size: 1.3em; filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6)); }
+.warning-banner .wb-text { color: #fca5a5; font-weight: 600; font-size: 0.93em; line-height: 1.5; }
 
-/* Resource Cards */
+/* ─── LIVE PULSE DOT ─── */
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px #22c55e;
+    animation: livePulse 2s infinite ease-in-out;
+    margin-right: 4px;
+}
+@keyframes livePulse {
+    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+    50% { transform: scale(1.2); opacity: 0.8; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+}
+
+/* ─── KPI & METRIC SUMMARY CARDS ─── */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+.metric-pill {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px 20px;
+    backdrop-filter: blur(16px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.metric-pill:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: var(--bg-card-hover);
+}
+.metric-pill .mp-label {
+    color: var(--text-muted);
+    font-size: 0.72em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+}
+.metric-pill .mp-val {
+    color: var(--text-primary);
+    font-size: 1.1em;
+    font-weight: 800;
+}
+
+/* ─── ROADMAP PROGRESS TRACKER ─── */
+.progress-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.progress-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.progress-card-title {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.98em;
+}
+.progress-card-stat {
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-size: 0.92em;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+/* ─── WELCOME HERO WITH SHIMMER SWEEP ─── */
+.welcome-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.10) 45%, rgba(17, 14, 34, 0.85) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    border-top: 1px solid rgba(199, 210, 254, 0.45);
+    border-radius: 22px;
+    padding: 38px 38px 34px 38px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px -12px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.welcome-hero::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+    transform: translateX(-100%);
+    animation: shimmerSweep 9s infinite;
+    pointer-events: none;
+}
+@keyframes shimmerSweep {
+    0%, 75% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.welcome-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(99, 102, 241, 0.22);
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    color: #c7d2fe;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
+}
+.welcome-title {
+    font-size: 2.2em;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+}
+.welcome-desc {
+    color: #cbd5e1;
+    font-size: 1.02em;
+    line-height: 1.65;
+    max-width: 800px;
+    margin: 0;
+}
+
+/* Feature Boxes with Icon Bounce & Card Glow */
+.feature-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 26px;
+    height: 100%;
+    backdrop-filter: blur(16px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.feature-box:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(129, 140, 248, 0.45);
+    box-shadow: 0 16px 36px -8px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: var(--bg-card-hover);
+}
+.feature-box .fb-icon {
+    font-size: 2em;
+    margin-bottom: 14px;
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.feature-box:hover .fb-icon {
+    transform: scale(1.15) rotate(-4deg);
+}
+.feature-box .fb-title {
+    color: #ffffff;
+    font-size: 1.08em;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.feature-box .fb-desc {
+    color: var(--text-secondary);
+    font-size: 0.88em;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ─── STEP CARDS ─── */
+.step-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.step-card:hover {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(99, 102, 241, 0.35);
+    transform: translateX(4px);
+}
+.step-num {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9em;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
+}
+.step-content .step-title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95em;
+    margin-bottom: 4px;
+}
+.step-content .step-desc {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+    line-height: 1.5;
+}
+
+/* ─── ROADMAP CARDS ─── */
+.overview-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.09) 0%, rgba(19, 16, 36, 0.85) 100%);
+    border-left: 4px solid #10b981;
+    border-top: 1px solid rgba(16, 185, 129, 0.25);
+    border-right: 1px solid rgba(16, 185, 129, 0.12);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.08), -4px 0 16px rgba(16, 185, 129, 0.25);
+}
+.overview-card h3 { color: #34d399; margin-top: 0; font-size: 1.18em; font-weight: 700; }
+.overview-card p { color: #e2e8f0; margin: 10px 0; font-size: 0.95em; line-height: 1.7; }
+.overview-card .label {
+    color: #94a3b8; font-size: 0.72em; text-transform: uppercase;
+    letter-spacing: 1.5px; display: block; margin-bottom: 4px; font-weight: 600;
+}
+
+.phase-card {
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.65) 0%, rgba(19, 16, 36, 0.8) 100%);
+    border-left: 4px solid #818cf8;
+    border-top: 1px solid rgba(129, 140, 248, 0.25);
+    border-right: 1px solid rgba(129, 140, 248, 0.1);
+    border-bottom: 1px solid rgba(129, 140, 248, 0.1);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), -4px 0 16px rgba(129, 140, 248, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.phase-card:hover {
+    border-color: rgba(129, 140, 248, 0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px -10px rgba(99, 102, 241, 0.35), -4px 0 20px rgba(129, 140, 248, 0.4);
+}
+.phase-card h3 { color: #c7d2fe; margin-top: 0; margin-bottom: 10px; font-size: 1.15em; font-weight: 700; }
+.phase-card .when-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(99, 102, 241, 0.2);
+    color: #c7d2fe;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    margin-bottom: 18px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+}
+.phase-card .section-label {
+    color: var(--text-secondary);
+    font-size: 0.74em;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 18px 0 8px;
+    font-weight: 700;
+}
+.phase-card .explain-text { color: #cbd5e1; font-size: 0.93em; line-height: 1.75; }
+
+/* Glowing Neon Concept Pills */
+.phase-card .concept-tag {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.10);
+    color: #7dd3fc;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    margin: 4px 6px 4px 0;
+    font-weight: 600;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.phase-card .concept-tag:hover {
+    background: rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+}
+
+/* Interactive Checkboxes with Smooth Slide & Glow */
+div[data-testid="stCheckbox"] {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin: 6px 0;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+div[data-testid="stCheckbox"]:hover {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.35);
+    border-left: 3px solid #6366f1;
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+}
+
+/* ─── TIPS & RESOURCE CARDS ─── */
+.tips-card {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, rgba(19, 16, 36, 0.85) 100%);
+    border-left: 4px solid #f59e0b;
+    border-top: 1px solid rgba(245, 158, 11, 0.25);
+    border-right: 1px solid rgba(245, 158, 11, 0.1);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), -4px 0 16px rgba(245, 158, 11, 0.25);
+}
+.tips-card h3 { color: #fbbf24; margin-top: 0; font-size: 1.18em; font-weight: 700; }
+.tips-card p { color: #e2e8f0; font-size: 0.93em; margin: 10px 0; line-height: 1.7; }
+.tips-card ul { color: #e2e8f0; font-size: 0.9em; padding-left: 20px; margin: 8px 0; }
+.tips-card li { margin: 6px 0; line-height: 1.5; }
+
 .resource-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
-    padding: 22px;
-    transition: all 0.2s ease; height: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 24px;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 .resource-card:hover {
-    border-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+    border-color: rgba(99, 102, 241, 0.5);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 14px 32px -8px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
-.resource-card .rc-icon { font-size: 1.6em; margin-bottom: 10px; }
+.resource-card .rc-icon { font-size: 1.9em; margin-bottom: 12px; }
 .resource-card .rc-title {
-    color: #2563eb; font-weight: 700; font-size: 0.8em;
+    color: #a5b4fc; font-weight: 700; font-size: 0.88em;
     text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
 }
-.resource-card .rc-body { color: #94a3b8; font-size: 0.88em; line-height: 1.6; }
-.resource-card .rc-body a { color: #2563eb; text-decoration: none; }
-.resource-card .rc-body a:hover { color: #1d4ed8; text-decoration: underline; }
+.resource-card .rc-body { color: var(--text-secondary); font-size: 0.9em; line-height: 1.6; }
+.resource-card .rc-body a { color: var(--accent-cyan); text-decoration: none; font-weight: 600; }
+.resource-card .rc-body a:hover { text-decoration: underline; color: #bae6fd; text-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+
+/* ─── CHAT STYLING ─── */
+[data-testid="stChatMessage"] {
+    background: rgba(19, 16, 36, 0.7) !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 18px 22px !important;
+    margin-bottom: 14px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+[data-testid="stChatInput"] > div {
+    border-radius: 16px !important;
+    border: 1px solid var(--border-subtle) !important;
+    background: rgba(14, 11, 28, 0.95) !important;
+    backdrop-filter: blur(20px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+[data-testid="stChatInput"] > div:focus-within {
+    border-color: var(--accent-indigo) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), 0 0 20px rgba(99, 102, 241, 0.2) !important;
+}
+
+/* Quick prompt chips */
+.chat-chip-btn > button {
+    background: rgba(255, 255, 255, 0.035) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-secondary) !important;
+    border-radius: 20px !important;
+    font-size: 0.82em !important;
+    padding: 7px 16px !important;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.chat-chip-btn > button:hover {
+    background: rgba(99, 102, 241, 0.18) !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/*       V2.2  —  ADVANCED VISUAL EFFECTS & MICRO-ANIMATIONS     */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ─── CORE ANIMATIONS ─── */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.88); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── STAGGERED ENTRANCE ANIMATIONS FOR CARDS ─── */
+.feature-box {
+    animation: fadeInUp 0.6s ease-out both;
+}
+.feature-box:nth-child(1) { animation-delay: 0.1s; }
+.feature-box:nth-child(2) { animation-delay: 0.25s; }
+.feature-box:nth-child(3) { animation-delay: 0.4s; }
+
+.step-card {
+    animation: fadeInLeft 0.5s ease-out both;
+}
+.step-card:nth-child(1) { animation-delay: 0.15s; }
+.step-card:nth-child(2) { animation-delay: 0.3s; }
+.step-card:nth-child(3) { animation-delay: 0.45s; }
+
+.metric-pill {
+    animation: scaleIn 0.45s ease-out both;
+}
+.metric-pill:nth-child(1) { animation-delay: 0.05s; }
+.metric-pill:nth-child(2) { animation-delay: 0.15s; }
+.metric-pill:nth-child(3) { animation-delay: 0.25s; }
+.metric-pill:nth-child(4) { animation-delay: 0.35s; }
+
+.phase-card {
+    animation: slideUp 0.55s ease-out both;
+}
+.overview-card {
+    animation: fadeInUp 0.5s ease-out both;
+}
+.tips-card {
+    animation: fadeInUp 0.5s ease-out 0.1s both;
+}
+.resource-card {
+    animation: fadeInUp 0.5s ease-out both;
+}
+.resource-card:nth-child(1) { animation-delay: 0.1s; }
+.resource-card:nth-child(2) { animation-delay: 0.2s; }
+.resource-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* ─── TYPEWRITER CURSOR BLINK ON HEADER ─── */
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ─── RAINBOW GRADIENT SHIMMER ON GENERATE BUTTON ─── */
+section[data-testid="stSidebar"] .stButton > button {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #38bdf8 50%, #6366f1 75%, #4f46e5 100%) !important;
+    background-size: 300% 300% !important;
+    animation: rainbowShift 6s ease-in-out infinite !important;
+}
+@keyframes rainbowShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ─── BUTTON RIPPLE ON CLICK ─── */
+.stButton > button {
+    position: relative;
+    overflow: hidden;
+}
+.stButton > button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease-out, height 0.5s ease-out, opacity 0.6s ease-out;
+    opacity: 0;
+    pointer-events: none;
+}
+.stButton > button:active::after {
+    width: 250px;
+    height: 250px;
+    opacity: 0;
+    transition: 0s;
+}
+
+/* ─── HOVER ACCENT ON MODULE CARDS ─── */
+.feature-box:hover, .step-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 32px -8px rgba(99, 102, 241, 0.3) !important;
+    border-color: rgba(129, 140, 248, 0.5) !important;
+}
+
+
+/* ─── GLOWING ANIMATED GRADIENT BORDER ON PHASE CARDS ─── */
+.phase-card {
+    position: relative;
+}
+.phase-card::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 19px;
+    background: linear-gradient(135deg, rgba(129, 140, 248, 0.5), rgba(56, 189, 248, 0.3), rgba(139, 92, 246, 0.5), rgba(99, 102, 241, 0.4));
+    background-size: 400% 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: borderGlow 8s linear infinite;
+}
+.phase-card:hover::before {
+    opacity: 1;
+}
+@keyframes borderGlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ─── NEON GLOW DIVIDERS ─── */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(99, 102, 241, 0.5) 20%, rgba(56, 189, 248, 0.35) 50%, rgba(139, 92, 246, 0.5) 80%, transparent 100%);
+    margin: 28px 0;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.2);
+    animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 6px rgba(99, 102, 241, 0.15); opacity: 0.7; }
+    50%      { box-shadow: 0 0 14px rgba(99, 102, 241, 0.35); opacity: 1; }
+}
+
+/* ─── SPARKLE PARTICLES IN WELCOME HERO ─── */
+.welcome-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+        radial-gradient(1.5px 1.5px at 15% 20%, rgba(199, 210, 254, 0.6) 50%, transparent 50%),
+        radial-gradient(1px 1px at 45% 65%, rgba(56, 189, 248, 0.5) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 72% 15%, rgba(167, 139, 250, 0.5) 50%, transparent 50%),
+        radial-gradient(1px 1px at 88% 72%, rgba(199, 210, 254, 0.4) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 35% 85%, rgba(56, 189, 248, 0.4) 50%, transparent 50%),
+        radial-gradient(1px 1px at 60% 40%, rgba(129, 140, 248, 0.5) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 25% 50%, rgba(245, 158, 11, 0.3) 50%, transparent 50%),
+        radial-gradient(1px 1px at 82% 45%, rgba(34, 197, 94, 0.3) 50%, transparent 50%);
+    animation: sparkleFloat 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 22px;
+}
+@keyframes sparkleFloat {
+    0%   { opacity: 0.5; transform: translateY(0) scale(1); }
+    25%  { opacity: 0.8; transform: translateY(-3px) scale(1.02); }
+    50%  { opacity: 0.6; transform: translateY(2px) scale(0.98); }
+    75%  { opacity: 0.9; transform: translateY(-2px) scale(1.01); }
+    100% { opacity: 0.5; transform: translateY(0) scale(1); }
+}
+.welcome-hero > * { position: relative; z-index: 2; }
+
+/* ─── ANIMATED NUMBER PULSE ON METRIC VALUES ─── */
+.metric-pill .mp-val {
+    animation: countPulse 2s ease-out both;
+}
+@keyframes countPulse {
+    0%   { opacity: 0; transform: scale(0.8) translateY(8px); filter: blur(3px); }
+    60%  { opacity: 1; transform: scale(1.05) translateY(-2px); filter: blur(0); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+/* ─── HOVER GLOW OUTLINE ON TABS ─── */
+.stTabs [data-baseweb="tab"] {
+    position: relative;
+}
+.stTabs [data-baseweb="tab"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #38bdf8);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+.stTabs [data-baseweb="tab"]:hover::after {
+    width: 70%;
+}
+
+/* ─── ANIMATED GRADIENT TEXT ON WELCOME TITLE ─── */
+.welcome-title {
+    background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 25%, #38bdf8 50%, #818cf8 75%, #ffffff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientText 8s ease-in-out infinite;
+}
+@keyframes gradientText {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ─── SMOOTH PROGRESS BAR ANIMATION ─── */
+.stProgress > div > div > div {
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: progressShine 3s ease-in-out infinite;
+}
+@keyframes progressShine {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+/* ─── CONCEPT TAG ENTRANCE ─── */
+.phase-card .concept-tag {
+    animation: tagPop 0.3s ease-out both;
+}
+.phase-card .concept-tag:nth-child(1) { animation-delay: 0.1s; }
+.phase-card .concept-tag:nth-child(2) { animation-delay: 0.15s; }
+.phase-card .concept-tag:nth-child(3) { animation-delay: 0.2s; }
+.phase-card .concept-tag:nth-child(4) { animation-delay: 0.25s; }
+.phase-card .concept-tag:nth-child(5) { animation-delay: 0.3s; }
+.phase-card .concept-tag:nth-child(6) { animation-delay: 0.35s; }
+@keyframes tagPop {
+    0% { opacity: 0; transform: scale(0.7) translateY(6px); }
+    70% { transform: scale(1.08) translateY(-2px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── CHECKBOX COMPLETION GLOW ─── */
+div[data-testid="stCheckbox"] input:checked + label {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+div[data-testid="stCheckbox"]:has(input:checked) {
+    background: rgba(34, 197, 94, 0.06) !important;
+    border-color: rgba(34, 197, 94, 0.25) !important;
+    border-left: 3px solid #22c55e !important;
+}
+
+/* ─── CHAT MESSAGE ENTRANCE ─── */
+[data-testid="stChatMessage"] {
+    animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ─── SIDEBAR BRANDING GLOW ─── */
+section[data-testid="stSidebar"] > div:first-child {
+    position: relative;
+}
+section[data-testid="stSidebar"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(99, 102, 241, 0.08), transparent);
+    pointer-events: none;
+}
+
+/* ─── SUCCESS BANNER CONFETTI BURST ─── */
+.success-banner {
+    animation: fadeInSlide 0.4s ease-out, celebratePop 0.6s ease-out;
+}
+@keyframes celebratePop {
+    0%   { transform: scale(0.92); }
+    40%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* ─── QUICK PROMPT CHIPS FLOAT ANIMATION ─── */
+.chat-chip-btn > button {
+    animation: fadeInUp 0.35s ease-out both;
+}
+.chat-chip-btn:nth-child(1) > button { animation-delay: 0.05s; }
+.chat-chip-btn:nth-child(2) > button { animation-delay: 0.15s; }
+.chat-chip-btn:nth-child(3) > button { animation-delay: 0.25s; }
+.chat-chip-btn:nth-child(4) > button { animation-delay: 0.35s; }
+
+/* ─── FOCUS RING GLOW ON ALL INPUTS ─── */
+input:focus, textarea:focus, select:focus, [data-baseweb="select"] div:focus-within {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25), 0 0 16px rgba(99, 102, 241, 0.15) !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    transition: all 0.2s ease;
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #16162a; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+::-webkit-scrollbar-track { background: #0a0815; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; transition: background 0.3s; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); box-shadow: 0 0 6px rgba(99, 102, 241, 0.3); }
 
-hr { border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 24px 0; }
+</style>
+""", unsafe_allow_html=True)
 
-/* Animations */
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+# ─── ADDITIONAL VISUAL EFFECTS VIA SEPARATE INJECTION ───
+# This injects a floating particle canvas + ambient light sweep
+st.markdown("""
+<style>
+/* ─── TOOLTIP GLOW ON SIDEBAR HELP ICONS ─── */
+.stTooltipIcon svg {
+    transition: all 0.25s ease;
+}
+.stTooltipIcon:hover svg {
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.6));
+    transform: scale(1.15);
+}
+
+/* ─── ANIMATED UNDERLINE ON LINKS ─── */
+a {
+    position: relative;
+    text-decoration: none !important;
+}
+a::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
+    transition: width 0.3s ease;
+    border-radius: 1px;
+}
+a:hover::after {
+    width: 100%;
+}
+
+/* ─── PROGRESS CARD GLOW ON COMPLETION ─── */
+.progress-card {
+    transition: all 0.4s ease;
+}
+.progress-card:hover {
+    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border-color: var(--border-accent);
+}
+
+/* ─── DOWNLOAD BUTTON BOUNCE ─── */
+.stDownloadButton > button:hover {
+    animation: gentleBounce 0.5s ease;
+}
+@keyframes gentleBounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-6px); }
+    50%  { transform: translateY(-2px); }
+    70%  { transform: translateY(-4px); }
+    100% { transform: translateY(-2px) scale(1.01); }
+}
+
+/* ─── FLOATING STATUS BADGE BREATHE ─── */
+.live-dot {
+    animation: livePulse 2s infinite ease-in-out, dotBreathe 4s infinite ease-in-out !important;
+}
+@keyframes dotBreathe {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 4px #22c55e); }
+    50% { filter: brightness(1.4) drop-shadow(0 0 10px #22c55e); }
+}
 </style>
 """, unsafe_allow_html=True)
 
 
-# ─── HEADER ───
+# ─── HEADER BANNER WITH PULSE BADGES ───
 st.markdown("""
-<div style="padding: 8px 0 24px 0;">
-    <h1 style="margin: 0; line-height: 1.15; font-size: 2.4em;">
-        <span style="
-            color: #f1f5f9;
-            font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        ">SmartStudy AI</span>
-    </h1>
-    <p style="
-        color: #64748b; font-size: 0.95em; margin: 6px 0 0 0;
-        font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
-    ">KDU Academic Advisory System</p>
+<div style="padding: 12px 0 22px 0; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 26px;">
+    <div>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35); color: #818cf8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            <h1 style="margin: 0; line-height: 1.1; font-size: 2.3em; font-weight: 800; letter-spacing: -0.5px; color: #f8fafc;">
+                SmartStudy <span style="background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 25px rgba(99, 102, 241, 0.35);">AI</span>
+            </h1>
+        </div>
+        <p style="color: #94a3b8; font-size: 0.92em; margin: 0; font-weight: 500; letter-spacing: 0.8px;">
+            KDU Academic Advisory System • General Sir John Kotelawala Defence University
+        </p>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <span style="display: inline-flex; align-items: center; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35); color: #86efac; padding: 5px 14px; border-radius: 20px; font-size: 0.78em; font-weight: 700; box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);">
+            <span class="live-dot"></span> Ollama RTX 4060 GPU Active
+        </span>
+        <span style="background: rgba(99, 102, 241, 0.16); border: 1px solid rgba(99, 102, 241, 0.35); color: #c7d2fe; padding: 5px 14px; border-radius: 20px; font-size: 0.78em; font-weight: 700; box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);">
+            KDU Edition v2.2.1
+        </span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
+
+
+
+# ─── HELPER: Semester Mapping for KDU BSc IT ───
+def get_semester_for_subject(sub_key):
+    code = sub_key.split(':')[0].strip().upper()
+    if code.startswith('IT11'): return 'Year 1 • Semester 1'
+    if code.startswith('IT12'): return 'Year 1 • Semester 2'
+    if code.startswith('IT21'): return 'Year 2 • Semester 1'
+    if code.startswith('IT22'): return 'Year 2 • Semester 2'
+    if code.startswith('IT31'): return 'Year 3 • Semester 1'
+    if code.startswith('IT32'): return 'Year 3 • Semester 2'
+    if code.startswith('IT41'): return 'Year 4 • Semester 1'
+    return 'Other Modules'
+
+SEMESTERS_LIST = [
+    "All Semesters (24 Modules)",
+    "Year 1 • Semester 1",
+    "Year 1 • Semester 2",
+    "Year 2 • Semester 1",
+    "Year 2 • Semester 2",
+    "Year 3 • Semester 1",
+    "Year 3 • Semester 2",
+    "Year 4 • Semester 1"
+]
+
 
 # Initialize Session State
 if "generated_plan" not in st.session_state:
@@ -752,44 +1691,112 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 if "current_subject" not in st.session_state:
     st.session_state.current_subject = ""
+if "exam_days" not in st.session_state:
+    st.session_state.exam_days = 14
+if "daily_hours" not in st.session_state:
+    st.session_state.daily_hours = 3
+if "confidence" not in st.session_state:
+    st.session_state.confidence = "Know the Basics"
+if "completed_tasks" not in st.session_state:
+    st.session_state.completed_tasks = set()
+if "target_subject_select" not in st.session_state:
+    st.session_state.target_subject_select = list(SUBJECT_SYLLABUS.keys())[0]
+if "selected_semester" not in st.session_state:
+    st.session_state.selected_semester = "All Semesters (24 Modules)"
+if "quick_prompt" not in st.session_state:
+    st.session_state.quick_prompt = ""
 
-# --- SIDEBAR ---
+
+# --- SIDEBAR: Curriculum Navigation & Settings ---
 st.sidebar.markdown("""
-<div style="text-align: center; padding: 4px 0 18px 0;">
-    <div style="
-        font-size: 1.3em; font-weight: 800;
-        color: #f1f5f9;
-        letter-spacing: -0.3px; margin-bottom: 6px;
-    ">SmartStudy AI</div>
-    <div style="
-        display: inline-block; background: rgba(37, 99, 235, 0.15);
-        color: #60a5fa; padding: 3px 12px; border-radius: 12px;
-        font-size: 0.65em; font-weight: 600; letter-spacing: 0.8px;
-    ">KDU EDITION v2.0</div>
+<div style="text-align: center; padding: 4px 0 16px 0;">
+    <div style="font-size: 1.25em; font-weight: 800; color: #f1f5f9; letter-spacing: -0.3px;">
+        Advisor Control Panel
+    </div>
+    <div style="color: #64748b; font-size: 0.78em; margin-top: 2px;">
+        Configure your timeline & curriculum
+    </div>
 </div>
 """, unsafe_allow_html=True)
-st.sidebar.header("Target & Timeline")
-target_subject = st.sidebar.selectbox("Select Target Subject", list(SUBJECT_SYLLABUS.keys()))
-exam_days = st.sidebar.number_input("Exam Days Remaining", min_value=1, max_value=100, value=14)
+
+st.sidebar.header("1. Curriculum & Target")
+
+# Semester Filter to reduce cognitive load
+chosen_semester = st.sidebar.selectbox(
+    "Filter by Academic Semester",
+    SEMESTERS_LIST,
+    index=SEMESTERS_LIST.index(st.session_state.selected_semester) if st.session_state.selected_semester in SEMESTERS_LIST else 0,
+    help="Select your semester to quickly filter subjects, or view all modules."
+)
+st.session_state.selected_semester = chosen_semester
+
+# Filter subject list based on chosen semester
+if chosen_semester == "All Semesters (24 Modules)":
+    filtered_subjects = list(SUBJECT_SYLLABUS.keys())
+else:
+    filtered_subjects = [s for s in SUBJECT_SYLLABUS.keys() if get_semester_for_subject(s) == chosen_semester]
+    if not filtered_subjects:
+        filtered_subjects = list(SUBJECT_SYLLABUS.keys())
+
+# Ensure selected subject exists in filtered list
+curr_selected = st.session_state.target_subject_select
+if curr_selected not in filtered_subjects:
+    curr_selected = filtered_subjects[0]
+
+target_subject = st.sidebar.selectbox(
+    "Target Subject",
+    filtered_subjects,
+    index=filtered_subjects.index(curr_selected),
+    help="Select the specific KDU BSc IT module you are preparing for."
+)
+st.session_state.target_subject_select = target_subject
+
+exam_days = st.sidebar.number_input(
+    "Exam Days Remaining", 
+    min_value=1, 
+    max_value=100, 
+    value=st.session_state.exam_days,
+    help="How many calendar days remain before your examination?"
+)
 
 st.sidebar.markdown("---")
-st.sidebar.header("Study Capacity & Strategy")
-daily_hours = st.sidebar.slider("Daily Study Capacity (Hours/Day)", min_value=1, max_value=10, value=3)
+st.sidebar.header("2. Capacity & Preferences")
+
+daily_hours = st.sidebar.slider(
+    "Daily Study Capacity (Hours/Day)", 
+    min_value=1, 
+    max_value=10, 
+    value=st.session_state.daily_hours,
+    help="Realistic hours per day you can dedicate solely to this subject."
+)
+
 confidence = st.sidebar.select_slider(
     "Current Level of Understanding",
-    options=["Complete Beginner", "Know the Basics", "Intermediate", "Advanced Revision"]
+    options=["Complete Beginner", "Know the Basics", "Intermediate", "Advanced Revision"],
+    value=st.session_state.confidence if st.session_state.confidence in ["Complete Beginner", "Know the Basics", "Intermediate", "Advanced Revision"] else "Know the Basics"
 )
+
 study_style = st.sidebar.selectbox(
     "Primary Study Preference",
     ["Past Paper & Exam Pattern Drills", "Theory, Concepts & Diagrams", "Hands-on Coding & Practical Labs"]
 )
 
-# --- PLAN GENERATION ---
-if st.sidebar.button("Generate Personalized Study Plan", use_container_width=True):
+st.sidebar.markdown("---")
+
+
+# --- PLAN GENERATION ACTION ---
+generate_clicked = st.sidebar.button("Generate Personalized Study Plan", use_container_width=True)
+
+if generate_clicked:
+    st.session_state.exam_days = exam_days
+    st.session_state.daily_hours = daily_hours
+    st.session_state.confidence = confidence
+    st.session_state.completed_tasks = set()
+
     warnings_list = check_academic_rules(exam_days, daily_hours)
     if warnings_list:
         for w in warnings_list:
-            st.markdown(f'<div class="warning-banner"><span class="wb-icon">🔥</span><span class="wb-text">{w.replace("🚨 BURNOUT ALERT: ", "")}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="warning-banner"><span class="wb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span class="wb-text">{w}</span></div>', unsafe_allow_html=True)
 
     module_syllabus = SUBJECT_SYLLABUS.get(target_subject, ["Core Concepts", "Practical Tasks"])
     total_hours = exam_days * daily_hours
@@ -803,8 +1810,7 @@ if st.sidebar.button("Generate Personalized Study Plan", use_container_width=Tru
     )
 
     def ask_model(system_msg, user_msg, tokens=800):
-        """Single focused model call with extended timeout for first-load."""
-        client = OllamaClient(host='http://localhost:11434', timeout=300)  # 5-min timeout
+        client = OllamaClient(host='http://localhost:11434', timeout=300)
         resp = client.chat(
             model='smartstudy_ai',
             messages=[
@@ -819,8 +1825,6 @@ if st.sidebar.button("Generate Personalized Study Plan", use_container_width=Tru
             }
         )
         raw_output = resp['message']['content'].strip()
-        # PERMANENT FIX: Sanitize ALL model output at the source
-        # This ensures HTML can NEVER reach the parser or renderer
         return sanitize_llm_output(raw_output)
 
     plan_data = {
@@ -830,11 +1834,11 @@ if st.sidebar.button("Generate Personalized Study Plan", use_container_width=Tru
     }
 
     total_steps = n_topics + 2
-    progress_bar = st.progress(0, text="Starting generation...")
+    progress_bar = st.progress(0, text="Initializing roadmap generation...")
 
     try:
         # STEP 1: Overview
-        progress_bar.progress(1 / total_steps, text="📊 Generating strategy overview...")
+        progress_bar.progress(1 / total_steps, text="Analyzing timeline & strategy overview...")
         overview_raw = ask_model(
             f"""You are a KDU Academic Advisor. The student is studying {target_subject}.
 They are a {confidence} student with {exam_days} days left and {daily_hours} hours/day ({total_hours} hours total).
@@ -854,18 +1858,14 @@ Strategy: [2-3 sentences: which topic to start with and why, what to skip if pre
             elif plan_data['overview']['strategy'] and not ll.startswith('risk:'):
                 plan_data['overview']['strategy'] += ' ' + line
 
-        # STEP 2: One call per topic
-        # Calculate proper start/end day ranges for each topic
-        # FIX: Clamp so day labels never exceed exam_days
+        # STEP 2: Topic breakdown
         days_per_topic = max(1, exam_days // n_topics)
-        remainder_days = exam_days % n_topics  # distribute leftover days to early phases
+        remainder_days = exam_days % n_topics
         current_start = 1
         for i, topic in enumerate(module_syllabus):
-            # Give one extra day to the first `remainder_days` phases
             this_topic_days = days_per_topic + (1 if i < remainder_days else 0)
             end_day = min(current_start + this_topic_days - 1, exam_days)
 
-            # FIX: Ensure start day never exceeds exam_days
             if current_start > exam_days:
                 day_label = f"Day {exam_days}"
             elif current_start == end_day:
@@ -874,7 +1874,7 @@ Strategy: [2-3 sentences: which topic to start with and why, what to skip if pre
                 day_label = f"Days {current_start}–{end_day}"
 
             step = i + 2
-            progress_bar.progress(step / total_steps, text=f"📚 Generating Phase {i+1}/{n_topics}: {topic[:50]}...")
+            progress_bar.progress(step / total_steps, text=f"Synthesizing Phase {i+1}/{n_topics}: {topic[:45]}...")
 
             phase_raw = ask_model(
                 f"""You are a KDU Academic Advisor. Write a study section for ONE topic only.
@@ -897,7 +1897,6 @@ Tasks:
                 f"Write the study section for: {topic}", tokens=900
             )
 
-            # Sanitize raw HTML from LLM output (also done inside ask_model, but belt-and-suspenders)
             phase_raw = sanitize_llm_output(phase_raw)
 
             phase = {
@@ -908,35 +1907,30 @@ Tasks:
                 'tasks': []
             }
             current_field = None
-            # Lines that indicate we're in the tasks section (even without "Tasks:" header)
             task_prefixes = ('watch:', 'code:', 'practice:', 'summarise:', 'summarize:', 'self-test:', 'selftest:')
-            # Lines to skip (section headers from sanitized HTML, not actual content)
             skip_patterns = ('action steps', '✅ action steps')
-            
+
             for line in phase_raw.split('\n'):
                 line = line.strip()
                 if not line:
                     continue
                 ll = line.lower()
                 ll_stripped = ll.lstrip('-* ').strip()
-                
-                # Skip section header labels (from sanitized HTML)
+
                 if ll_stripped in skip_patterns:
-                    current_field = 'tasks'  # but do set the field context
+                    current_field = 'tasks'
                     continue
-                    
+
                 if ll.startswith('explain:'):
                     phase['explain'] = line.split(':', 1)[-1].strip()
                     current_field = 'explain'
                 elif ll.startswith('key concepts:') or ll.startswith('key concept:'):
                     val = line.split(':', 1)[-1].strip()
-                    # FIX: Use smart splitter that handles concatenated concepts
                     phase['concepts'] = split_concepts(val)
                     current_field = 'concepts'
                 elif ll.startswith('tasks:'):
                     current_field = 'tasks'
                 elif any(ll_stripped.startswith(p) for p in task_prefixes):
-                    # Auto-detect task lines even without explicit "Tasks:" header
                     current_field = 'tasks'
                     task = line.lstrip('-*0123456789. ').strip()
                     task = task.lstrip('✅ ').strip()
@@ -950,15 +1944,14 @@ Tasks:
                     (len(line) > 2 and line[0].isdigit())
                 ):
                     task = line.lstrip('-*0123456789. ').strip()
-                    # Also strip leading ✅ from self-test questions
                     task = task.lstrip('✅ ').strip()
                     if task:
                         phase['tasks'].append(task)
             plan_data['phases'].append(phase)
-            current_start = end_day + 1  # next topic starts the day after this one ends
+            current_start = end_day + 1
 
         # STEP 3: Tips
-        progress_bar.progress((total_steps - 1) / total_steps, text="💡 Generating exam tips...")
+        progress_bar.progress((total_steps - 1) / total_steps, text="Compiling KDU exam survival techniques...")
         tips_raw_response = ask_model(
             f"""You are a KDU Academic Advisor. Write exam tips for {target_subject}.
 Reply in EXACTLY this format:
@@ -970,7 +1963,6 @@ Night before:
 - [logistics tip for exam morning]""",
             "Write the exam tips.", tokens=350
         )
-        # FIX: Sanitize tips output too
         tips_raw = sanitize_llm_output(tips_raw_response)
         current_field = None
         for line in tips_raw.split('\n'):
@@ -991,372 +1983,431 @@ Night before:
             elif current_field == 'night' and (line.startswith('-') or line.startswith('*')):
                 plan_data['tips']['night'].append(line.lstrip('-* ').strip())
 
-        progress_bar.progress(1.0, text="✅ Plan generated!")
+        progress_bar.progress(1.0, text="Roadmap generated successfully!")
         progress_bar.empty()
 
         st.session_state.generated_plan = plan_data
         st.session_state.current_subject = target_subject
         st.session_state.chat_history = []
+        st.rerun()
 
     except Exception as e:
         progress_bar.empty()
         st.error(f"Generation failed: {str(e)}")
 
-# --- HELPER: Render plan dict as cards ---
-def render_plan_as_cards(plan_data, subject):
-    """Render the structured plan dict as styled UI cards."""
-    st.markdown("""
-    <style>
-    .overview-card {
-        background: linear-gradient(135deg, rgba(26, 26, 46, 0.8) 0%, rgba(22, 33, 62, 0.8) 100%);
-        border-left: 4px solid #4ade80;
-        border-radius: 16px;
-        padding: 24px 28px;
-        margin-bottom: 24px;
-        backdrop-filter: blur(16px);
-        box-shadow: 0 4px 24px rgba(74, 222, 128, 0.06), 0 1px 2px rgba(0,0,0,0.2);
-        border: 1px solid rgba(74, 222, 128, 0.1);
-        animation: fadeInUp 0.6s ease-out;
-    }
-    .overview-card h3 { color: #4ade80; margin-top: 0; font-size: 1.15em; font-weight: 700; }
-    .overview-card p { color: #e2e8f0; margin: 10px 0; font-size: 0.95em; line-height: 1.7; }
-    .overview-card .label {
-        color: #94a3b8; font-size: 0.72em; text-transform: uppercase;
-        letter-spacing: 1.5px; display: block; margin-bottom: 4px; font-weight: 600;
-    }
-    .phase-card {
-        background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(26, 26, 46, 0.7) 100%);
-        border-left: 4px solid #818cf8;
-        border-radius: 16px;
-        padding: 24px 28px;
-        margin-bottom: 18px;
-        backdrop-filter: blur(16px);
-        box-shadow: 0 4px 24px rgba(99, 102, 241, 0.06), 0 1px 2px rgba(0,0,0,0.15);
-        border: 1px solid rgba(129, 140, 248, 0.1);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        animation: fadeInUp 0.5s ease-out both;
-    }
-    .phase-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 32px rgba(99, 102, 241, 0.12), 0 2px 4px rgba(0,0,0,0.2);
-        border-color: rgba(129, 140, 248, 0.25);
-    }
-    .phase-card h3 { color: #a5b4fc; margin-top: 0; margin-bottom: 10px; font-size: 1.08em; font-weight: 700; }
-    .phase-card .when-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, #312e81, #3730a3);
-        color: #c7d2fe;
-        padding: 5px 16px;
-        border-radius: 20px;
-        font-size: 0.78em;
-        margin-bottom: 16px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        border: 1px solid rgba(129, 140, 248, 0.15);
-    }
-    .phase-card .section-label {
-        color: #64748b;
-        font-size: 0.72em;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin: 16px 0 8px;
-        font-weight: 600;
-    }
-    .phase-card .explain-text { color: #cbd5e1; font-size: 0.93em; line-height: 1.75; }
-    .phase-card .concept-tag {
-        display: inline-block;
-        background: rgba(30, 58, 95, 0.6);
-        color: #7dd3fc;
-        padding: 5px 14px;
-        border-radius: 20px;
-        font-size: 0.8em;
-        margin: 4px 5px 4px 0;
-        font-weight: 500;
-        border: 1px solid rgba(125, 211, 252, 0.12);
-        transition: all 0.2s ease;
-    }
-    .phase-card .concept-tag:hover {
-        background: rgba(30, 58, 95, 0.85);
-        border-color: rgba(125, 211, 252, 0.3);
-        box-shadow: 0 0 12px rgba(125, 211, 252, 0.1);
-    }
-    .phase-card .task-item {
-        color: #e2e8f0;
-        font-size: 0.9em;
-        padding: 10px 12px;
-        border-bottom: 1px solid rgba(30, 41, 59, 0.5);
-        line-height: 1.6;
-        border-radius: 8px;
-        margin: 2px 0;
-        transition: background 0.2s ease;
-    }
-    .phase-card .task-item:hover { background: rgba(99, 102, 241, 0.04); }
-    .phase-card .task-item:last-child { border-bottom: none; }
-    .phase-card .task-label {
-        color: #818cf8; font-weight: 700; font-size: 0.78em;
-        text-transform: uppercase; margin-right: 6px; letter-spacing: 0.5px;
-    }
-    .tips-card {
-        background: linear-gradient(135deg, rgba(28, 25, 23, 0.8) 0%, rgba(41, 37, 36, 0.8) 100%);
-        border-left: 4px solid #fb923c;
-        border-radius: 16px;
-        padding: 24px 28px;
-        margin-top: 12px;
-        backdrop-filter: blur(16px);
-        box-shadow: 0 4px 24px rgba(251, 146, 60, 0.06), 0 1px 2px rgba(0,0,0,0.15);
-        border: 1px solid rgba(251, 146, 60, 0.1);
-        animation: fadeInUp 0.7s ease-out;
-    }
-    .tips-card h3 { color: #fb923c; margin-top: 0; font-size: 1.08em; font-weight: 700; }
-    .tips-card p { color: #e2e8f0; font-size: 0.93em; margin: 10px 0; line-height: 1.7; }
-    .tips-card ul { color: #e2e8f0; font-size: 0.9em; padding-left: 20px; margin: 6px 0; }
-    .tips-card li { margin: 6px 0; line-height: 1.5; }
-    </style>
+
+# ─── MAIN CANVAS RENDERING ───
+if st.session_state.generated_plan:
+    # ── STATE 1: PLAN GENERATED (TABBED DASHBOARD) ──
+    st.markdown('<div class="success-banner"><span class="sb-check"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span><span class="sb-text">Personalized Study Roadmap Generated Successfully!</span></div>', unsafe_allow_html=True)
+
+    # Metric KPI Highlights
+    ov = st.session_state.generated_plan.get('overview', {})
+    total_study_hours = st.session_state.exam_days * st.session_state.daily_hours
+    
+    st.markdown(f"""
+    <div class="metrics-grid">
+        <div class="metric-pill">
+            <div class="mp-label">Target Module</div>
+            <div class="mp-val">{st.session_state.current_subject.split(':')[0]}</div>
+        </div>
+        <div class="metric-pill">
+            <div class="mp-label">Exam Timeline</div>
+            <div class="mp-val">{st.session_state.exam_days} Days Left</div>
+        </div>
+        <div class="metric-pill">
+            <div class="mp-label">Time Budget</div>
+            <div class="mp-val">{st.session_state.daily_hours}h/day &bull; {total_study_hours}h total</div>
+        </div>
+        <div class="metric-pill">
+            <div class="mp-label">Target Readiness</div>
+            <div class="mp-val">{st.session_state.confidence}</div>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
 
-    ov = plan_data.get('overview', {})
-    risk_html   = f'<p><span class="label">📊 Risk Status</span>{ov.get("risk", "")}</p>' if ov.get('risk') else ''
-    budget_html = f'<p><span class="label">⏳ Time Budget</span>{ov.get("budget", "")}</p>' if ov.get('budget') else ''
-    strat_html  = f'<p><span class="label">🎯 Strategy</span>{ov.get("strategy", "")}</p>' if ov.get('strategy') else ''
-    st.markdown(f'<div class="overview-card"><h3>📊 Your Study Strategy</h3>{risk_html}{budget_html}{strat_html}</div>', unsafe_allow_html=True)
+    # Four Organized Tabs
+    tab_roadmap, tab_tips, tab_resources, tab_advisor = st.tabs([
+        "Study Roadmap & Tasks",
+        "Exam Strategy & Tips",
+        "Curated Resources & Past Papers",
+        "Ask Academic Advisor"
+    ])
 
-    phases = plan_data.get('phases', [])
-    if phases:
-        st.markdown("### 📅 Day-by-Day Study Schedule")
+    # ── TAB 1: ROADMAP & TASKS ──
+    with tab_roadmap:
+        # Overview Card
+        risk_html   = f'<p><span class="label">Academic Situation Assessment</span>{ov.get("risk", "")}</p>' if ov.get('risk') else ''
+        budget_html = f'<p><span class="label">Total Time Allocation</span>{ov.get("budget", "")}</p>' if ov.get('budget') else ''
+        strat_html  = f'<p><span class="label">Recommended Strategy</span>{ov.get("strategy", "")}</p>' if ov.get('strategy') else ''
+        st.markdown(f'<div class="overview-card"><h3>Academic Strategy Overview</h3>{risk_html}{budget_html}{strat_html}</div>', unsafe_allow_html=True)
+
+        phases = st.session_state.generated_plan.get('phases', [])
+        
+        # Calculate task completion stats
+        all_task_ids = []
+        for p_idx, p in enumerate(phases):
+            for t_idx, _ in enumerate(p.get('tasks', [])):
+                all_task_ids.append(f"task_{p_idx}_{t_idx}")
+        
+        total_tasks_count = len(all_task_ids)
+        completed_count = len([tid for tid in all_task_ids if tid in st.session_state.completed_tasks])
+        completion_pct = int((completed_count / max(total_tasks_count, 1)) * 100)
+
+        # Interactive Progress Banner
+        st.markdown(f"""
+        <div class="progress-card">
+            <div class="progress-card-header">
+                <span class="progress-card-title">Your Roadmap Completion</span>
+                <span class="progress-card-stat">{completed_count} of {total_tasks_count} Action Steps Completed ({completion_pct}%)</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.progress(completion_pct / 100.0)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+
+        # Render Phases
         for i, phase in enumerate(phases):
-            day_badge    = f'<span class="when-badge">⏱️ {phase["day"]}</span>' if phase.get('day') else ''
+            day_badge = f'<span class="when-badge">{phase["day"]}</span>' if phase.get('day') else ''
 
-            # === RENDER-TIME SANITIZATION ===
-            # Get raw data from stored phase
+            # Sanitization of explain
             raw_explain_str = phase.get('explain', '')
-            raw_concepts = list(phase.get('concepts', []))  # copy to avoid mutating state
-            raw_tasks = list(phase.get('tasks', []))
-            
-            # Check if explain field has embedded HTML (LLM mixed content)
-            has_html_in_explain = bool(re.search(r'<\s*(div|span|p|br)\b', raw_explain_str, re.IGNORECASE))
-            
-            if has_html_in_explain or (not raw_tasks and '<' in raw_explain_str):
-                # Re-sanitize the entire explain blob to extract structure
-                full_sanitized = sanitize_llm_output(raw_explain_str)
-                # Re-parse to separate explain text from tasks
-                recovered_explain = []
-                recovered_tasks = []
-                task_prefixes = ('watch:', 'code:', 'practice:', 'summarise:', 'summarize:', 'self-test:', 'selftest:')
-                skip_headers = ('action steps', '✅ action steps')
-                in_tasks = False
-                
-                for line in full_sanitized.split('\n'):
-                    stripped = line.strip()
-                    if not stripped:
-                        continue
-                    sl = stripped.lower().lstrip('-* ').strip()
-                    
-                    if sl in skip_headers:
-                        in_tasks = True
-                        continue
-                    elif any(sl.startswith(p) for p in task_prefixes):
-                        in_tasks = True
-                        task = stripped.lstrip('-*0123456789. ').lstrip('✅ ').strip()
-                        if task:
-                            recovered_tasks.append(task)
-                    elif in_tasks and (stripped.startswith('-') or stripped.startswith('✅')):
-                        task = stripped.lstrip('-*0123456789. ').lstrip('✅ ').strip()
-                        if task:
-                            recovered_tasks.append(task)
-                    elif not in_tasks:
-                        recovered_explain.append(stripped)
-                
-                raw_explain_str = ' '.join(recovered_explain)
-                if recovered_tasks:
-                    raw_tasks = recovered_tasks
-            
-            # Final sanitize on explain text
-            raw_explain = sanitize_llm_output(raw_explain_str)
-            # SAFETY NET: escape any surviving HTML angle brackets in explain text
-            raw_explain = raw_explain.replace('<', '&lt;').replace('>', '&gt;')
-            explain_html = f'<div class="section-label">📖 What This Topic Is About</div><div class="explain-text">{raw_explain}</div>' if raw_explain else ''
+            raw_explain = sanitize_llm_output(raw_explain_str).replace('<', '&lt;').replace('>', '&gt;')
+            explain_html = f'<div class="section-label">What This Topic Is About</div><div class="explain-text">{raw_explain}</div>' if raw_explain else ''
 
-            # Re-split concepts at render-time in case they were stored concatenated
-            if raw_concepts:
-                if len(raw_concepts) == 1 and len(raw_concepts[0]) > 50:
-                    raw_concepts = split_concepts(raw_concepts[0])
-                expanded = []
-                for c in raw_concepts:
-                    c = sanitize_llm_output(c)
-                    c = c.replace('<', '&lt;').replace('>', '&gt;')
-                    if len(c) > 50:
-                        expanded.extend(split_concepts(c))
-                    elif c:
-                        expanded.append(c)
-                raw_concepts = expanded
+            # Concepts
+            raw_concepts = phase.get('concepts', [])
             concepts_html = ''
             if raw_concepts:
-                tags = ''.join([f'<span class="concept-tag">{c}</span>' for c in raw_concepts])
-                concepts_html = f'<div class="section-label">🎯 Must Know for Exam</div><div>{tags}</div>'
+                tags = ''.join([f'<span class="concept-tag">{sanitize_llm_output(c).replace("<", "&lt;").replace(">", "&gt;")}</span>' for c in raw_concepts if c])
+                concepts_html = f'<div class="section-label">Must Know for Exam</div><div>{tags}</div>'
 
-            # Render tasks
-            tasks_html = ''
-            if raw_tasks:
-                items = []
-                for t in raw_tasks:
-                    t = sanitize_llm_output(t)
-                    if not t:
-                        continue
-                    t = t.lstrip('✅ ').strip()
-                    if not t:
-                        continue
-                    # SAFETY NET: escape stray HTML in task text
-                    t = t.replace('<', '&lt;').replace('>', '&gt;')
-                    parts = t.split(':', 1)
-                    if len(parts) == 2 and len(parts[0]) <= 12:
-                        items.append(f'<div class="task-item"><span class="task-label">{parts[0]}:</span>{parts[1].strip()}</div>')
-                    else:
-                        items.append(f'<div class="task-item">✅ {t}</div>')
-                if items:
-                    tasks_html = f'<div class="section-label">✅ Action Steps</div>{"".join(items)}'
-
-            # Fallback if phase is completely empty
-            if not raw_explain and not raw_concepts and not raw_tasks:
-                explain_html = '<div class="explain-text" style="color:#94a3b8; font-style:italic;">⚠️ Content for this topic could not be generated. Please click "Generate Personalized Study Plan" again.</div>'
-
+            # Phase Container
             st.markdown(f"""
-            <div class="phase-card" style="animation-delay: {i * 0.08}s;">
+            <div class="phase-card">
                 <h3>Phase {i+1}: {phase['name']}</h3>
                 {day_badge}
                 {explain_html}
                 {concepts_html}
-                {tasks_html}
+                <div class="section-label" style="margin-top: 20px;">Action Steps</div>
             </div>
             """, unsafe_allow_html=True)
 
-    tips = plan_data.get('tips', {})
-    if any([tips.get('score'), tips.get('mistake'), tips.get('night')]):
-        score_html   = f'<p>🏆 <strong>Score Tip:</strong> {tips["score"]}</p>' if tips.get('score') else ''
-        mistake_html = f'<p>⚠️ <strong>Common Mistake:</strong> {tips["mistake"]}</p>' if tips.get('mistake') else ''
-        night_items  = ''.join([f'<li>{n}</li>' for n in tips.get('night', [])])
-        night_html   = f'<p>📝 <strong>Night Before:</strong><ul>{night_items}</ul></p>' if night_items else ''
-        st.markdown(f'<div class="tips-card"><h3>💡 Exam Survival Tips</h3>{score_html}{mistake_html}{night_html}</div>', unsafe_allow_html=True)
+            # Interactive Checkbox Tasks inside phase
+            tasks = phase.get('tasks', [])
+            if tasks:
+                task_cols = st.columns(1)
+                for t_idx, t in enumerate(tasks):
+                    clean_t = sanitize_llm_output(t).lstrip('✅ ').strip()
+                    task_key = f"chk_{i}_{t_idx}"
+                    task_id = f"task_{i}_{t_idx}"
+                    
+                    is_done = st.checkbox(
+                        clean_t, 
+                        key=task_key, 
+                        value=(task_id in st.session_state.completed_tasks)
+                    )
+                    if is_done:
+                        st.session_state.completed_tasks.add(task_id)
+                    else:
+                        st.session_state.completed_tasks.discard(task_id)
 
+    # ── TAB 2: EXAM STRATEGY & TIPS ──
+    with tab_tips:
+        tips = st.session_state.generated_plan.get('tips', {})
+        if any([tips.get('score'), tips.get('mistake'), tips.get('night')]):
+            score_html   = f'<p><strong>High-Scoring Technique:</strong> {tips["score"]}</p>' if tips.get('score') else ''
+            mistake_html = f'<p><strong>Most Frequent Student Mistake:</strong> {tips["mistake"]}</p>' if tips.get('mistake') else ''
+            night_items  = ''.join([f'<li>{n}</li>' for n in tips.get('night', [])])
+            night_html   = f'<p><strong>Night Before Preparation:</strong><ul>{night_items}</ul></p>' if night_items else ''
+            st.markdown(f'<div class="tips-card"><h3>KDU Exam Survival Guide</h3>{score_html}{mistake_html}{night_html}</div>', unsafe_allow_html=True)
+        else:
+            st.info("No specific exam tips were generated for this run.")
 
-# --- DISPLAY UI ---
-if st.session_state.generated_plan:
-    st.markdown('<div class="success-banner"><span class="sb-check">✅</span><span class="sb-text">Study Roadmap Generated Successfully!</span></div>', unsafe_allow_html=True)
+    # ── TAB 3: RESOURCES & PAST PAPERS ──
+    with tab_resources:
+        st.markdown('<h3 style="color: #f8fafc; margin-bottom: 8px;">Curated References & Library Resources</h3>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #94a3b8; font-size: 0.9em; margin-bottom: 20px;">Direct access to lecture materials, recommended video series, and KDU past paper archives.</p>', unsafe_allow_html=True)
 
-    # 1. Render beautiful card UI
-    render_plan_as_cards(st.session_state.generated_plan, st.session_state.current_subject)
+        resources = SUBJECT_RESOURCES.get(st.session_state.current_subject, {
+            "youtube": "Search on YouTube: freeCodeCamp, Bro Code, CrashCourse",
+            "docs": "KDU Lecture Slides & official textbooks",
+        })
+        module_code = st.session_state.current_subject.split(':')[0].upper()
+        _yt_html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank">\1</a>', resources['youtube'])
+        _doc_html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank">\1</a>', resources['docs'])
 
-    # 2. Display Curated Resources
-    st.markdown("---")
-    st.markdown('<h3 style="color: #e2e8f0; margin-bottom: 20px;">📚 Recommended Resources</h3>', unsafe_allow_html=True)
-    resources = SUBJECT_RESOURCES.get(st.session_state.current_subject, {
-        "youtube": "Search on YouTube: freeCodeCamp, Bro Code, CrashCourse",
-        "docs": "KDU Lecture Slides & official textbooks",
-    })
-    module_code = st.session_state.current_subject.split(':')[0].upper()
-    # Convert any markdown links to HTML for resource cards
-    _yt_html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank">\1</a>', resources['youtube'])
-    _doc_html = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2" target="_blank">\1</a>', resources['docs'])
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown(f'<div class="resource-card"><div class="rc-icon">🎥</div><div class="rc-title">Video Lectures</div><div class="rc-body">{_yt_html}</div></div>', unsafe_allow_html=True)
-    with col2:
-        st.markdown(f'<div class="resource-card"><div class="rc-icon">📖</div><div class="rc-title">Documentation</div><div class="rc-body">{_doc_html}</div></div>', unsafe_allow_html=True)
-    with col3:
-        st.markdown(f'<div class="resource-card"><div class="rc-icon">📝</div><div class="rc-title">Past Papers</div><div class="rc-body"><a href="http://library.kdu.ac.lk/" target="_blank">Search {module_code} in KDU Library</a></div></div>', unsafe_allow_html=True)
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(f'<div class="resource-card"><div class="rc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></div><div class="rc-title">Video Lectures</div><div class="rc-body">{_yt_html}</div></div>', unsafe_allow_html=True)
+        with col2:
+            st.markdown(f'<div class="resource-card"><div class="rc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rc-title">Reference Docs</div><div class="rc-body">{_doc_html}</div></div>', unsafe_allow_html=True)
+        with col3:
+            st.markdown(f'<div class="resource-card"><div class="rc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><div class="rc-title">KDU Past Papers</div><div class="rc-body"><a href="http://library.kdu.ac.lk/" target="_blank">Search {module_code} in KDU Library ↗</a></div></div>', unsafe_allow_html=True)
 
-    # FIX: Resource disclaimer — LLMs may hallucinate video titles/channel names
-    st.caption("⚠️ _Note: Video titles and channel names suggested in the study plan are AI-generated recommendations. "
-               "Please search for similar topics on YouTube — exact titles may vary._")
+        st.caption("_Note: Video titles suggested in the study plan are AI-generated recommendations. Search for matching topics on YouTube._")
 
-    # 3. PDF Download — pass plan_data dict directly to the new structured PDF builder
-    st.markdown("---")
-    plan_data = st.session_state.generated_plan
-    pdf_bytes = create_pdf(plan_data, st.session_state.current_subject)
-    st.download_button(
-        label="📥 Download Study Plan as PDF",
-        data=bytes(pdf_bytes),
-        file_name=f"{st.session_state.current_subject.split(':')[0]}_StudyPlan.pdf",
-        mime="application/pdf",
-        use_container_width=True
-    )
+        st.markdown("---")
+        st.markdown('<h4 style="color: #f8fafc; margin-bottom: 12px;">Export Study Kit</h4>', unsafe_allow_html=True)
+        plan_data = st.session_state.generated_plan
+        pdf_bytes = create_pdf(plan_data, st.session_state.current_subject)
+        st.download_button(
+            label="Download Complete Study Plan (PDF)",
+            data=bytes(pdf_bytes),
+            file_name=f"{st.session_state.current_subject.split(':')[0]}_StudyPlan.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
 
-    # 4. Interactive Chat
-    st.markdown("---")
-    st.subheader("💬 Ask Your KDU Advisor a Follow-up Question")
-    
-    for msg in st.session_state.chat_history:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
+    # ── TAB 4: ASK ACADEMIC ADVISOR ──
+    with tab_advisor:
+        st.markdown('<h3 style="color: #f8fafc; margin-bottom: 6px;">Ask Your KDU Academic Advisor</h3>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #94a3b8; font-size: 0.9em; margin-bottom: 16px;">Have questions about the topics or need practical examples? Ask below or pick a suggested prompt.</p>', unsafe_allow_html=True)
 
-    # Dynamic Chat Placeholder logic for ALL 24 KDU Modules
-    chat_hints = {
-        "IT11012: Information Technology Concepts": "E.g., What is the difference between system software and application software?",
-        "IT11022: Fundamentals of Computer Programming": "E.g., Can you explain what a 'for loop' is with a simple example?",
-        "IT11042: Fundamentals of Computer Systems": "E.g., How do I convert a decimal number to binary?",
-        "IT12023: Object Oriented Programming": "E.g., What is the difference between a class and an object?",
-        "IT12033: Fundamentals of Database Management Systems": "E.g., What is a Primary Key?",
-        "IT12042: Computer Systems Architecture": "E.g., Can you explain the instruction execution cycle?",
-        "IT12062: Computer Network Systems I": "E.g., What is the difference between TCP and UDP?",
-        "IT12072: Web Technologies": "E.g., How do I link a CSS file to my HTML document?",
-        "IT21013: Rapid Application Development": "E.g., What are the main phases of Rapid Application Development?",
-        "IT21022: System Analysis and Design": "E.g., Can you give an example of an actor in a use case diagram?",
-        "IT21043: Advanced Database Management Systems": "E.g., Explain the ACID properties in database transactions.",
-        "IT22013: Data Structures and Algorithms": "E.g., What is the time complexity of a binary search?",
-        "IT22022: Software Engineering": "E.g., What is the difference between Agile and Waterfall methodologies?",
-        "IT22032: Operating Systems": "E.g., What causes a deadlock in an operating system?",
-        "IT31042: Mobile Computing": "E.g., Can you explain the Android Activity Lifecycle?",
-        "IT31062: Information and Data Security": "E.g., How does asymmetric cryptography work?",
-        "IT31093: Essentials of Artificial Intelligence": "E.g., Explain how the A* search algorithm works.",
-        "IT32012: Distributed Systems": "E.g., What is a Remote Procedure Call (RPC)?",
-        "IT32033: Cyber Security": "E.g., Can you explain what a SQL injection vulnerability is?",
-        "IT32043: Cloud Computing and Virtualization": "E.g., What is the difference between IaaS, PaaS, and SaaS?",
-        "IT32073: Machine Learning": "E.g., Explain the difference between supervised and unsupervised learning.",
-        "IT41013: Data Mining and Data Warehousing": "E.g., What is the difference between OLAP and OLTP?",
-        "IT41032: Advanced Computer Network Systems II": "E.g., How does the OSPF routing protocol work?",
-        "IT41043: Database Administration": "E.g., What are the main responsibilities of a DBA during a database recovery?"
-    }
-    
-    # Get the specific hint, or use a default one if the subject isn't in the dictionary
-    hint_text = chat_hints.get(st.session_state.current_subject, "E.g., Can you explain this concept in more detail?")
-    
-    user_query = st.chat_input(hint_text)
-    if user_query:
-        st.session_state.chat_history.append({"role": "user", "content": user_query})
-        with st.chat_message("user"):
-            st.markdown(user_query)
+        # Quick Suggested Prompts
+        st.markdown("<div style='color: #64748b; font-size: 0.78em; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;'>Quick Prompts</div>", unsafe_allow_html=True)
+        qp1, qp2, qp3, qp4 = st.columns(4)
+        
+        selected_prompt = None
+        with qp1:
+            if st.button("Explain in simpler terms", key="qp_simple", use_container_width=True):
+                selected_prompt = f"Can you explain the core concepts of {st.session_state.current_subject} in simpler terms with real-world analogies?"
+        with qp2:
+            if st.button("5-Question Practice Quiz", key="qp_quiz", use_container_width=True):
+                selected_prompt = f"Give me a 5-question exam-style practice quiz for {st.session_state.current_subject} with answers."
+        with qp3:
+            if st.button("Practical Code / Lab Example", key="qp_code", use_container_width=True):
+                selected_prompt = f"Provide a practical code snippet or implementation example relevant to {st.session_state.current_subject}."
+        with qp4:
+            if st.button("Common Exam Traps", key="qp_traps", use_container_width=True):
+                selected_prompt = f"What are the most dangerous exam traps and tricky questions examiners set for {st.session_state.current_subject}?"
 
-        chat_system_instruction = """You are a helpful KDU Academic Tutor.
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+
+        # Render existing messages
+        for msg in st.session_state.chat_history:
+            with st.chat_message(msg["role"]):
+                st.markdown(msg["content"])
+
+        chat_hints = {
+            "IT11012: Information Technology Concepts": "E.g., What is the difference between system software and application software?",
+            "IT11022: Fundamentals of Computer Programming": "E.g., Can you explain what a 'for loop' is with a simple example?",
+            "IT11042: Fundamentals of Computer Systems": "E.g., How do I convert a decimal number to binary?",
+            "IT12023: Object Oriented Programming": "E.g., What is the difference between a class and an object?",
+            "IT12033: Fundamentals of Database Management Systems": "E.g., What is a Primary Key?",
+            "IT12042: Computer Systems Architecture": "E.g., Can you explain the instruction execution cycle?",
+            "IT12062: Computer Network Systems I": "E.g., What is the difference between TCP and UDP?",
+            "IT12072: Web Technologies": "E.g., How do I link a CSS file to my HTML document?",
+            "IT21013: Rapid Application Development": "E.g., What are the main phases of Rapid Application Development?",
+            "IT21022: System Analysis and Design": "E.g., Can you give an example of an actor in a use case diagram?",
+            "IT21043: Advanced Database Management Systems": "E.g., Explain the ACID properties in database transactions.",
+            "IT22013: Data Structures and Algorithms": "E.g., What is the time complexity of a binary search?",
+            "IT22022: Software Engineering": "E.g., What is the difference between Agile and Waterfall methodologies?",
+            "IT22032: Operating Systems": "E.g., What causes a deadlock in an operating system?",
+            "IT31042: Mobile Computing": "E.g., Can you explain the Android Activity Lifecycle?",
+            "IT31062: Information and Data Security": "E.g., How does asymmetric cryptography work?",
+            "IT31093: Essentials of Artificial Intelligence": "E.g., Explain how the A* search algorithm works.",
+            "IT32012: Distributed Systems": "E.g., What is a Remote Procedure Call (RPC)?",
+            "IT32033: Cyber Security": "E.g., Can you explain what a SQL injection vulnerability is?",
+            "IT32043: Cloud Computing and Virtualization": "E.g., What is the difference between IaaS, PaaS, and SaaS?",
+            "IT32073: Machine Learning": "E.g., Explain the difference between supervised and unsupervised learning.",
+            "IT41013: Data Mining and Data Warehousing": "E.g., What is the difference between OLAP and OLTP?",
+            "IT41032: Advanced Computer Network Systems II": "E.g., How does the OSPF routing protocol work?",
+            "IT41043: Database Administration": "E.g., What are the main responsibilities of a DBA during a database recovery?"
+        }
+        hint_text = chat_hints.get(st.session_state.current_subject, "Ask any academic or exam question...")
+
+        user_query = st.chat_input(hint_text)
+        prompt_to_run = selected_prompt or user_query
+
+        if prompt_to_run:
+            st.session_state.chat_history.append({"role": "user", "content": prompt_to_run})
+            with st.chat_message("user"):
+                st.markdown(prompt_to_run)
+
+            chat_system_instruction = """You are a helpful KDU Academic Tutor.
 CRITICAL RULES:
 1. YOU MUST NOT output "Predicted Performance Category" or default formats.
 2. ONLY answer the specific question asked by the student.
 3. Be direct, conversational, and helpful."""
 
-        # Build a text summary of the plan for chat context
-        plan_data = st.session_state.generated_plan
-        plan_summary = f"Subject: {st.session_state.current_subject}\n"
-        for i, ph in enumerate(plan_data.get('phases', [])):
-            plan_summary += f"Phase {i+1} ({ph['day']}): {ph['name']} - {ph.get('explain','')[:200]}...\n"
-        advisor_chat_prompt = f"{plan_summary}\n\nStudent's Question: {user_query}"
+            plan_summary = f"Subject: {st.session_state.current_subject}\n"
+            for i, ph in enumerate(st.session_state.generated_plan.get('phases', [])):
+                plan_summary += f"Phase {i+1} ({ph['day']}): {ph['name']} - {ph.get('explain','')[:200]}...\n"
+            advisor_chat_prompt = f"{plan_summary}\n\nStudent's Question: {prompt_to_run}"
 
-        with st.chat_message("assistant"):
-            with st.spinner("Advisor is thinking..."):
-                try:
-                    # Use chat-specific prompt — NOT the plan generator prompt
-                    chat_client = OllamaClient(host='http://localhost:11434', timeout=300)
-                    follow_up_resp = chat_client.chat(
-                        model='smartstudy_ai',
-                        messages=[
-                            {'role': 'system', 'content': chat_system_instruction},
-                            {'role': 'user', 'content': advisor_chat_prompt}
-                        ],
-                        options={
-                            'num_predict': 800,
-                            'temperature': 0.5,
-                            'repeat_penalty': 1.2
-                        }
-                    )
-                    answer = follow_up_resp['message']['content']
-                    st.markdown(answer)
-                    st.session_state.chat_history.append({"role": "assistant", "content": answer})
-                except Exception as e:
-                    st.error(f"Chat error: {str(e)}")
+            with st.chat_message("assistant"):
+                with st.spinner("Advisor is preparing a detailed response..."):
+                    try:
+                        chat_client = OllamaClient(host='http://localhost:11434', timeout=300)
+                        follow_up_resp = chat_client.chat(
+                            model='smartstudy_ai',
+                            messages=[
+                                {'role': 'system', 'content': chat_system_instruction},
+                                {'role': 'user', 'content': advisor_chat_prompt}
+                            ],
+                            options={
+                                'num_predict': 800,
+                                'temperature': 0.5,
+                                'repeat_penalty': 1.2
+                            }
+                        )
+                        answer = follow_up_resp['message']['content']
+                        st.markdown(answer)
+                        st.session_state.chat_history.append({"role": "assistant", "content": answer})
+                    except Exception as e:
+                        st.error(f"Chat error: {str(e)}")
+
+else:
+    # ── STATE 2: EMPTY STATE (WELCOME & GETTING STARTED DASHBOARD) ──
+    st.markdown("""
+    <div class="welcome-hero">
+        <div class="welcome-badge">KDU Academic Advisory AI v2.0</div>
+        <h2 class="welcome-title">Your AI-Powered Exam Preparation Partner</h2>
+        <p class="welcome-desc">
+            Designed specifically for General Sir John Kotelawala Defence University (KDU) BSc (Hons) IT students.
+            Generate customized day-by-day study roadmaps, pinpoint high-yield exam concepts, and prepare strategically for your semester finals.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 3 Key Feature Highlights
+    fc1, fc2, fc3 = st.columns(3)
+    with fc1:
+        st.markdown("""
+        <div class="feature-box">
+            <div class="fb-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div class="fb-title">24 KDU IT Modules</div>
+            <p class="fb-desc">
+                Complete official syllabus coverage spanning Year 1 to Year 4, including Algorithms, Networking, Databases, AI, and Software Engineering.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    with fc2:
+        st.markdown("""
+        <div class="feature-box">
+            <div class="fb-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="fb-title">Adaptive Timeline</div>
+            <p class="fb-desc">
+                Custom time-budgeting that balances theory, coding labs, and self-testing across your exact days remaining and daily hours.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    with fc3:
+        st.markdown("""
+        <div class="feature-box">
+            <div class="fb-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div class="fb-title">Comprehensive Study Pack</div>
+            <p class="fb-desc">
+                Download printable PDF roadmaps, review common exam traps, and chat live with an AI tutor fine-tuned for KDU coursework.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+
+    # Visual 3-Step Guide & Popular Modules Grid
+    col_steps, col_popular = st.columns([1, 1], gap="large")
+
+    with col_steps:
+        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 14px;">How to Get Started</h3>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <div class="step-title">Select Semester & Module</div>
+                <div class="step-desc">Use the sidebar filters to pick your exact course code (e.g. IT12023 OOP or IT22013 DSA).</div>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <div class="step-title">Set Your Study Capacity</div>
+                <div class="step-desc">Specify days left and daily hours. The academic guardrail will ensure your schedule avoids burnout.</div>
+            </div>
+        </div>
+        <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <div class="step-title">Generate & Track</div>
+                <div class="step-desc">Click "Generate Study Plan" to receive day-by-day action steps, must-know concepts, and past paper links.</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_popular:
+        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 6px;">Quick-Start Recommended Modules</h3>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #94a3b8; font-size: 0.85em; margin-bottom: 14px;">Select one of the most demanding KDU exam modules to auto-configure your plan:</p>', unsafe_allow_html=True)
+        
+        pop1, pop2 = st.columns(2)
+        with pop1:
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #a5b4fc; font-size: 0.88em;">IT12023</span>
+                    <span style="font-size: 0.7em; background: rgba(99, 102, 241, 0.15); color: #c7d2fe; padding: 2px 8px; border-radius: 10px;">Y1 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Object Oriented Programming</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">Inheritance • Polymorphism • I/O</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Load OOP Plan", key="btn_oop", use_container_width=True):
+                st.session_state.selected_semester = "Year 1 • Semester 2"
+                st.session_state.target_subject_select = "IT12023: Object Oriented Programming"
+                st.rerun()
+
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px; margin-top: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #7dd3fc; font-size: 0.88em;">IT12062</span>
+                    <span style="font-size: 0.7em; background: rgba(56, 189, 248, 0.15); color: #bae6fd; padding: 2px 8px; border-radius: 10px;">Y1 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Computer Network Systems I</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">OSI • TCP/IP • Subnetting • MAC</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Load Networks Plan", key="btn_net", use_container_width=True):
+                st.session_state.selected_semester = "Year 1 • Semester 2"
+                st.session_state.target_subject_select = "IT12062: Computer Network Systems I"
+                st.rerun()
+
+        with pop2:
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #c4b5fd; font-size: 0.88em;">IT22013</span>
+                    <span style="font-size: 0.7em; background: rgba(139, 92, 246, 0.15); color: #ddd6fe; padding: 2px 8px; border-radius: 10px;">Y2 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Data Structures & Algorithms</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">BST • Graphs • Big-O Complexity</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Load DSA Plan", key="btn_dsa", use_container_width=True):
+                st.session_state.selected_semester = "Year 2 • Semester 2"
+                st.session_state.target_subject_select = "IT22013: Data Structures and Algorithms"
+                st.rerun()
+
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px; margin-top: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #fcd34d; font-size: 0.88em;">IT22032</span>
+                    <span style="font-size: 0.7em; background: rgba(245, 158, 11, 0.15); color: #fef3c7; padding: 2px 8px; border-radius: 10px;">Y2 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Operating Systems</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">CPU Scheduling • Deadlocks • Paging</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Load OS Plan", key="btn_os", use_container_width=True):
+                st.session_state.selected_semester = "Year 2 • Semester 2"
+                st.session_state.target_subject_select = "IT22032: Operating Systems"
+                st.rerun()
+
+        st.markdown("""
+        <div style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: 14px; padding: 14px 18px; margin-top: 16px; display: flex; align-items: center; gap: 10px;">
+            <span style="display: inline-flex; align-items: center; color: #818cf8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></span>
+            <span style="color: #cbd5e1; font-size: 0.83em; line-height: 1.5;">
+                <strong style="color: #a5b4fc;">Pro Tip:</strong> Click any module above or use the sidebar on the left to set custom days and capacity before generating your plan.
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+
