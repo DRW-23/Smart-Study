@@ -1304,28 +1304,6 @@ div[data-testid="stCheckbox"]:hover {
 .resource-card:nth-child(2) { animation-delay: 0.2s; }
 .resource-card:nth-child(3) { animation-delay: 0.3s; }
 
-/* ─── THIRD FLOATING ORB (CENTER MESH) ─── */
-.stApp > div:first-child::before {
-    content: "";
-    position: fixed;
-    top: 40%;
-    left: 45%;
-    width: 550px;
-    height: 550px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, rgba(245, 158, 11, 0.04) 50%, transparent 70%);
-    filter: blur(100px);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-    animation: floatOrb3 25s ease-in-out infinite alternate;
-}
-@keyframes floatOrb3 {
-    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
-    33%  { transform: translate(40px, -50px) scale(1.1) rotate(5deg); }
-    66%  { transform: translate(-30px, 30px) scale(0.94) rotate(-3deg); }
-    100% { transform: translate(20px, -20px) scale(1.05) rotate(2deg); }
-}
-
 /* ─── TYPEWRITER CURSOR BLINK ON HEADER ─── */
 @keyframes cursorBlink {
     0%, 100% { opacity: 1; }
@@ -1370,17 +1348,13 @@ section[data-testid="stSidebar"] .stButton > button {
     transition: 0s;
 }
 
-/* ─── PARALLAX HOVER TILT ON MODULE QUICK-START CARDS ─── */
-div[data-testid="stVerticalBlock"] div[style*="border-radius: 14px"][style*="background: rgba(255, 255, 255, 0.02)"] {
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-style: preserve-3d;
-    perspective: 800px;
-}
-div[data-testid="stVerticalBlock"] div[style*="border-radius: 14px"][style*="background: rgba(255, 255, 255, 0.02)"]:hover {
-    transform: rotateY(-2deg) rotateX(1.5deg) translateY(-4px) scale(1.02);
-    box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+/* ─── HOVER ACCENT ON MODULE CARDS ─── */
+.feature-box:hover, .step-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 32px -8px rgba(99, 102, 241, 0.3) !important;
     border-color: rgba(129, 140, 248, 0.5) !important;
 }
+
 
 /* ─── GLOWING ANIMATED GRADIENT BORDER ON PHASE CARDS ─── */
 .phase-card {
@@ -1570,11 +1544,6 @@ section[data-testid="stSidebar"]::after {
 .chat-chip-btn:nth-child(3) > button { animation-delay: 0.25s; }
 .chat-chip-btn:nth-child(4) > button { animation-delay: 0.35s; }
 
-/* ─── SUBTLE NOISE TEXTURE OVERLAY ─── */
-.stApp::before, .stApp::after {
-    mix-blend-mode: soft-light;
-}
-
 /* ─── FOCUS RING GLOW ON ALL INPUTS ─── */
 input:focus, textarea:focus, select:focus, [data-baseweb="select"] div:focus-within {
     outline: none !important;
@@ -1596,24 +1565,6 @@ input:focus, textarea:focus, select:focus, [data-baseweb="select"] div:focus-wit
 # This injects a floating particle canvas + ambient light sweep
 st.markdown("""
 <style>
-/* ─── AMBIENT LIGHT SWEEP ACROSS MAIN CONTENT ─── */
-.main .block-container::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.03), transparent);
-    animation: ambientSweep 15s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-}
-@keyframes ambientSweep {
-    0%   { left: -100%; }
-    100% { left: 100%; }
-}
-
 /* ─── TOOLTIP GLOW ON SIDEBAR HELP ICONS ─── */
 .stTooltipIcon svg {
     transition: all 0.25s ease;
