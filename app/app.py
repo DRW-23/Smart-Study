@@ -595,11 +595,12 @@ st.markdown("""
 
 /* Root & Theme Setup */
 :root {
-    --bg-primary: #0c0a17;
-    --bg-card: rgba(21, 18, 38, 0.7);
-    --bg-card-hover: rgba(27, 23, 48, 0.85);
+    --bg-primary: #0a0815;
+    --bg-card: rgba(19, 16, 36, 0.72);
+    --bg-card-hover: rgba(26, 22, 48, 0.88);
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-accent: rgba(99, 102, 241, 0.25);
+    --border-accent: rgba(99, 102, 241, 0.35);
+    --border-glow: rgba(99, 102, 241, 0.6);
     --accent-indigo: #6366f1;
     --accent-violet: #8b5cf6;
     --accent-cyan: #38bdf8;
@@ -614,11 +615,58 @@ html, body, [class*="css"] {
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
+/* ─── AMBIENT FLOATING AURORA LIGHT ORBS ─── */
 .stApp {
-    background: radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
-                #0c0a17 !important;
+    background-color: var(--bg-primary) !important;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.10) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.04) 0%, transparent 50%) !important;
     color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+    filter: blur(80px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb1 18s ease-in-out infinite alternate;
+}
+
+.stApp::after {
+    content: "";
+    position: fixed;
+    bottom: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(139, 92, 246, 0.06) 50%, transparent 70%);
+    filter: blur(90px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb2 22s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(60px, 40px) scale(1.12); }
+    100% { transform: translate(20px, 80px) scale(0.95); }
+}
+
+@keyframes floatOrb2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-50px, -30px) scale(1.08); }
+    100% { transform: translate(-20px, -60px) scale(0.92); }
 }
 
 #MainMenu, footer { visibility: hidden; }
@@ -626,8 +674,10 @@ html, body, [class*="css"] {
 
 /* ─── SIDEBAR MODERNIZATION ─── */
 section[data-testid="stSidebar"] {
-    background: #110e22 !important;
+    background: rgba(14, 11, 28, 0.95) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
     border-right: 1px solid var(--border-subtle) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35) !important;
 }
 
 section[data-testid="stSidebar"] .stMarkdown h2, 
@@ -653,27 +703,32 @@ section[data-testid="stSidebar"] label {
     letter-spacing: 0.3px;
 }
 
-/* Sidebar Primary Action Button */
+/* Sidebar Primary Action Button with Radiant Shimmer */
 section[data-testid="stSidebar"] .stButton > button {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #7c3aed 100%) !important;
+    background-size: 200% 200% !important;
     color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 12px !important;
     padding: 14px 20px !important;
     font-weight: 700 !important;
     font-size: 0.95em !important;
     letter-spacing: 0.4px;
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35) !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 section[data-testid="stSidebar"] .stButton > button:hover {
-    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 26px rgba(99, 102, 241, 0.5) !important;
+    background-position: 100% 50% !important;
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6), 0 0 12px rgba(139, 92, 246, 0.4) !important;
 }
 
-/* ─── TABS STYLING ─── */
+section[data-testid="stSidebar"] .stButton > button:active {
+    transform: translateY(0px) scale(0.99) !important;
+}
+
+/* ─── TABS STYLING WITH LUMINOUS ACTIVE STATE ─── */
 .stTabs [data-baseweb="tab-list"] {
     gap: 8px;
     background: rgba(255, 255, 255, 0.03);
@@ -681,6 +736,7 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     border-radius: 14px;
     border: 1px solid var(--border-subtle);
     margin-bottom: 24px;
+    backdrop-filter: blur(12px);
 }
 
 .stTabs [data-baseweb="tab"] {
@@ -689,77 +745,98 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.9em;
-    padding: 8px 18px;
+    padding: 8px 20px;
     border: none !important;
     background: transparent;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stTabs [data-baseweb="tab"]:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .stTabs [aria-selected="true"] {
     background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35) !important;
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
 }
 
-/* ─── PROGRESS BAR ─── */
+/* ─── PROGRESS BAR WITH NEON GLOW ─── */
 .stProgress > div > div > div {
     background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #38bdf8 100%) !important;
     border-radius: 8px;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5) !important;
 }
 
 /* ─── DOWNLOAD BUTTON ─── */
 .stDownloadButton > button {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
     color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
     border-radius: 12px !important;
     padding: 14px 24px !important;
     font-weight: 700 !important;
     font-size: 0.98em !important;
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25) !important;
-    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .stDownloadButton > button:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 24px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 0 8px 28px rgba(16, 185, 129, 0.5), 0 0 14px rgba(16, 185, 129, 0.3) !important;
 }
 
 /* ─── DARK-MODE ALERT BANNERS ─── */
 .success-banner {
     background: rgba(34, 197, 94, 0.10) !important;
-    border: 1px solid rgba(34, 197, 94, 0.25) !important;
+    border: 1px solid rgba(34, 197, 94, 0.3) !important;
     border-left: 4px solid #22c55e !important;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 16px 22px;
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     gap: 12px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: fadeInSlide 0.4s ease-out;
 }
-.success-banner .sb-check { font-size: 1.3em; }
+.success-banner .sb-check { font-size: 1.3em; filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6)); }
 .success-banner .sb-text { color: #86efac; font-weight: 600; font-size: 0.95em; letter-spacing: 0.3px; }
 
 .warning-banner {
     background: rgba(239, 68, 68, 0.12) !important;
-    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    border: 1px solid rgba(239, 68, 68, 0.35) !important;
     border-left: 4px solid #ef4444 !important;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 16px 22px;
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     gap: 12px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.12);
+    animation: fadeInSlide 0.4s ease-out;
 }
-.warning-banner .wb-icon { font-size: 1.3em; }
+.warning-banner .wb-icon { font-size: 1.3em; filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6)); }
 .warning-banner .wb-text { color: #fca5a5; font-weight: 600; font-size: 0.93em; line-height: 1.5; }
+
+/* ─── LIVE PULSE DOT ─── */
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px #22c55e;
+    animation: livePulse 2s infinite ease-in-out;
+    margin-right: 4px;
+}
+@keyframes livePulse {
+    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+    50% { transform: scale(1.2); opacity: 0.8; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+}
 
 /* ─── KPI & METRIC SUMMARY CARDS ─── */
 .metrics-grid {
@@ -769,16 +846,20 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     margin-bottom: 24px;
 }
 .metric-pill {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 14px;
-    padding: 14px 18px;
-    backdrop-filter: blur(12px);
-    transition: all 0.2s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px 20px;
+    backdrop-filter: blur(16px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 .metric-pill:hover {
     border-color: var(--border-accent);
-    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -6px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: var(--bg-card-hover);
 }
 .metric-pill .mp-label {
     color: var(--text-muted);
@@ -786,22 +867,24 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.2px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 .metric-pill .mp-val {
     color: var(--text-primary);
-    font-size: 1.05em;
-    font-weight: 700;
+    font-size: 1.1em;
+    font-weight: 800;
 }
 
 /* ─── ROADMAP PROGRESS TRACKER ─── */
 .progress-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 14px;
-    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 18px 22px;
     margin-bottom: 20px;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 .progress-card-header {
     display: flex;
@@ -812,76 +895,105 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 .progress-card-title {
     color: var(--text-primary);
     font-weight: 700;
-    font-size: 0.95em;
+    font-size: 0.98em;
 }
 .progress-card-stat {
     color: var(--accent-cyan);
     font-weight: 700;
-    font-size: 0.9em;
+    font-size: 0.92em;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
 }
 
-/* ─── WELCOME HERO & CARDS ─── */
+/* ─── WELCOME HERO WITH SHIMMER SWEEP ─── */
 .welcome-hero {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.08) 50%, rgba(56, 189, 248, 0.04) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    border-radius: 20px;
-    padding: 36px 36px 32px 36px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.10) 45%, rgba(17, 14, 34, 0.85) 100%);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    border-top: 1px solid rgba(199, 210, 254, 0.45);
+    border-radius: 22px;
+    padding: 38px 38px 34px 38px;
     margin-bottom: 28px;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.15);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px -12px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
+
+.welcome-hero::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+    transform: translateX(-100%);
+    animation: shimmerSweep 9s infinite;
+    pointer-events: none;
+}
+@keyframes shimmerSweep {
+    0%, 75% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
 .welcome-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(99, 102, 241, 0.2);
-    border: 1px solid rgba(99, 102, 241, 0.35);
-    color: #a5b4fc;
-    padding: 4px 14px;
+    background: rgba(99, 102, 241, 0.22);
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    color: #c7d2fe;
+    padding: 5px 16px;
     border-radius: 20px;
     font-size: 0.75em;
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
     margin-bottom: 14px;
+    box-shadow: 0 0 14px rgba(99, 102, 241, 0.25);
 }
 .welcome-title {
-    font-size: 2.1em;
+    font-size: 2.2em;
     font-weight: 800;
     letter-spacing: -0.5px;
     color: #ffffff;
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
     line-height: 1.2;
 }
 .welcome-desc {
-    color: var(--text-secondary);
+    color: #cbd5e1;
     font-size: 1.02em;
-    line-height: 1.6;
-    max-width: 780px;
+    line-height: 1.65;
+    max-width: 800px;
     margin: 0;
 }
 
+/* Feature Boxes with Icon Bounce & Card Glow */
 .feature-box {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 26px;
     height: 100%;
-    backdrop-filter: blur(14px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(16px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 .feature-box:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-accent);
-    box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.2);
+    transform: translateY(-4px) scale(1.01);
+    border-color: rgba(129, 140, 248, 0.45);
+    box-shadow: 0 16px 36px -8px rgba(99, 102, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: var(--bg-card-hover);
 }
 .feature-box .fb-icon {
-    font-size: 1.8em;
-    margin-bottom: 12px;
+    font-size: 2em;
+    margin-bottom: 14px;
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.feature-box:hover .fb-icon {
+    transform: scale(1.15) rotate(-4deg);
 }
 .feature-box .fb-title {
     color: #ffffff;
-    font-size: 1.05em;
+    font-size: 1.08em;
     font-weight: 700;
     margin-bottom: 8px;
 }
@@ -894,28 +1006,35 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 
 /* ─── STEP CARDS ─── */
 .step-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.025);
     border: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     padding: 18px 20px;
     margin-bottom: 12px;
     display: flex;
     align-items: flex-start;
     gap: 16px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.step-card:hover {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(99, 102, 241, 0.35);
+    transform: translateX(4px);
 }
 .step-num {
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     color: #ffffff;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 0.9em;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.45);
 }
 .step-content .step-title {
     color: #ffffff;
@@ -931,16 +1050,18 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 
 /* ─── ROADMAP CARDS ─── */
 .overview-card {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(21, 18, 38, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.09) 0%, rgba(19, 16, 36, 0.85) 100%);
     border-left: 4px solid #10b981;
-    border-radius: 16px;
-    padding: 24px 28px;
+    border-top: 1px solid rgba(16, 185, 129, 0.25);
+    border-right: 1px solid rgba(16, 185, 129, 0.12);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+    border-radius: 18px;
+    padding: 26px 30px;
     margin-bottom: 24px;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 4px 24px rgba(16, 185, 129, 0.06);
-    border: 1px solid rgba(16, 185, 129, 0.15);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.08), -4px 0 16px rgba(16, 185, 129, 0.25);
 }
-.overview-card h3 { color: #34d399; margin-top: 0; font-size: 1.15em; font-weight: 700; }
+.overview-card h3 { color: #34d399; margin-top: 0; font-size: 1.18em; font-weight: 700; }
 .overview-card p { color: #e2e8f0; margin: 10px 0; font-size: 0.95em; line-height: 1.7; }
 .overview-card .label {
     color: #94a3b8; font-size: 0.72em; text-transform: uppercase;
@@ -948,34 +1069,38 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 }
 
 .phase-card {
-    background: linear-gradient(135deg, rgba(30, 27, 75, 0.6) 0%, rgba(21, 18, 38, 0.75) 100%);
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.65) 0%, rgba(19, 16, 36, 0.8) 100%);
     border-left: 4px solid #818cf8;
-    border-radius: 16px;
-    padding: 24px 28px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 4px 24px rgba(99, 102, 241, 0.06);
-    border: 1px solid rgba(129, 140, 248, 0.12);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-top: 1px solid rgba(129, 140, 248, 0.25);
+    border-right: 1px solid rgba(129, 140, 248, 0.1);
+    border-bottom: 1px solid rgba(129, 140, 248, 0.1);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), -4px 0 16px rgba(129, 140, 248, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .phase-card:hover {
-    border-color: rgba(129, 140, 248, 0.3);
-    box-shadow: 0 10px 32px -10px rgba(99, 102, 241, 0.25);
+    border-color: rgba(129, 140, 248, 0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px -10px rgba(99, 102, 241, 0.35), -4px 0 20px rgba(129, 140, 248, 0.4);
 }
-.phase-card h3 { color: #c7d2fe; margin-top: 0; margin-bottom: 10px; font-size: 1.12em; font-weight: 700; }
+.phase-card h3 { color: #c7d2fe; margin-top: 0; margin-bottom: 10px; font-size: 1.15em; font-weight: 700; }
 .phase-card .when-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(99, 102, 241, 0.18);
-    color: #a5b4fc;
-    padding: 5px 16px;
+    background: rgba(99, 102, 241, 0.2);
+    color: #c7d2fe;
+    padding: 6px 18px;
     border-radius: 20px;
-    font-size: 0.78em;
-    margin-bottom: 16px;
-    font-weight: 600;
+    font-size: 0.8em;
+    margin-bottom: 18px;
+    font-weight: 700;
     letter-spacing: 0.3px;
-    border: 1px solid rgba(129, 140, 248, 0.2);
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
 }
 .phase-card .section-label {
     color: var(--text-secondary);
@@ -986,54 +1111,59 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     font-weight: 700;
 }
 .phase-card .explain-text { color: #cbd5e1; font-size: 0.93em; line-height: 1.75; }
+
+/* Glowing Neon Concept Pills */
 .phase-card .concept-tag {
     display: inline-block;
-    background: rgba(56, 189, 248, 0.12);
+    background: rgba(56, 189, 248, 0.10);
     color: #7dd3fc;
-    padding: 6px 14px;
+    padding: 6px 16px;
     border-radius: 20px;
     font-size: 0.8em;
     margin: 4px 6px 4px 0;
-    font-weight: 500;
-    border: 1px solid rgba(125, 211, 252, 0.18);
-    transition: all 0.2s ease;
+    font-weight: 600;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .phase-card .concept-tag:hover {
-    background: rgba(56, 189, 248, 0.22);
-    border-color: rgba(125, 211, 252, 0.4);
-    box-shadow: 0 0 12px rgba(125, 211, 252, 0.15);
+    background: rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+    transform: translateY(-2px);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
 }
 
-.phase-card .task-item {
-    color: #e2e8f0;
-    font-size: 0.9em;
-    padding: 10px 14px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    line-height: 1.6;
-    border-radius: 8px;
-    margin: 2px 0;
+/* Interactive Checkboxes with Smooth Slide & Glow */
+div[data-testid="stCheckbox"] {
     background: rgba(255, 255, 255, 0.02);
-    transition: background 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin: 6px 0;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.phase-card .task-item:hover { background: rgba(99, 102, 241, 0.06); }
-.phase-card .task-item:last-child { border-bottom: none; }
-.phase-card .task-label {
-    color: #818cf8; font-weight: 700; font-size: 0.78em;
-    text-transform: uppercase; margin-right: 6px; letter-spacing: 0.5px;
+div[data-testid="stCheckbox"]:hover {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.35);
+    border-left: 3px solid #6366f1;
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
 }
 
 /* ─── TIPS & RESOURCE CARDS ─── */
 .tips-card {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(21, 18, 38, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, rgba(19, 16, 36, 0.85) 100%);
     border-left: 4px solid #f59e0b;
-    border-radius: 16px;
-    padding: 24px 28px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(16px);
-    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.06);
-    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-top: 1px solid rgba(245, 158, 11, 0.25);
+    border-right: 1px solid rgba(245, 158, 11, 0.1);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 22px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), -4px 0 16px rgba(245, 158, 11, 0.25);
 }
-.tips-card h3 { color: #fbbf24; margin-top: 0; font-size: 1.15em; font-weight: 700; }
+.tips-card h3 { color: #fbbf24; margin-top: 0; font-size: 1.18em; font-weight: 700; }
 .tips-card p { color: #e2e8f0; font-size: 0.93em; margin: 10px 0; line-height: 1.7; }
 .tips-card ul { color: #e2e8f0; font-size: 0.9em; padding-left: 20px; margin: 8px 0; }
 .tips-card li { margin: 6px 0; line-height: 1.5; }
@@ -1041,98 +1171,536 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 .resource-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: 16px;
-    padding: 22px;
-    transition: all 0.25s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 24px;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     height: 100%;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 .resource-card:hover {
-    border-color: var(--accent-indigo);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px -6px rgba(99, 102, 241, 0.25);
+    border-color: rgba(99, 102, 241, 0.5);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 14px 32px -8px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
-.resource-card .rc-icon { font-size: 1.8em; margin-bottom: 12px; }
+.resource-card .rc-icon { font-size: 1.9em; margin-bottom: 12px; }
 .resource-card .rc-title {
-    color: #818cf8; font-weight: 700; font-size: 0.85em;
+    color: #a5b4fc; font-weight: 700; font-size: 0.88em;
     text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
 }
 .resource-card .rc-body { color: var(--text-secondary); font-size: 0.9em; line-height: 1.6; }
 .resource-card .rc-body a { color: var(--accent-cyan); text-decoration: none; font-weight: 600; }
-.resource-card .rc-body a:hover { text-decoration: underline; color: #bae6fd; }
+.resource-card .rc-body a:hover { text-decoration: underline; color: #bae6fd; text-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
 
 /* ─── CHAT STYLING ─── */
 [data-testid="stChatMessage"] {
-    background: rgba(21, 18, 38, 0.6) !important;
-    border-radius: 14px !important;
+    background: rgba(19, 16, 36, 0.7) !important;
+    border-radius: 16px !important;
     border: 1px solid var(--border-subtle) !important;
-    padding: 16px 20px !important;
-    margin-bottom: 12px;
-    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 18px 22px !important;
+    margin-bottom: 14px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 [data-testid="stChatInput"] > div {
-    border-radius: 14px !important;
+    border-radius: 16px !important;
     border: 1px solid var(--border-subtle) !important;
-    background: rgba(17, 14, 34, 0.9) !important;
-    backdrop-filter: blur(16px);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(14, 11, 28, 0.95) !important;
+    backdrop-filter: blur(20px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 [data-testid="stChatInput"] > div:focus-within {
     border-color: var(--accent-indigo) !important;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), 0 0 20px rgba(99, 102, 241, 0.2) !important;
 }
 
 /* Quick prompt chips */
 .chat-chip-btn > button {
-    background: rgba(255, 255, 255, 0.04) !important;
+    background: rgba(255, 255, 255, 0.035) !important;
     border: 1px solid var(--border-subtle) !important;
     color: var(--text-secondary) !important;
     border-radius: 20px !important;
     font-size: 0.82em !important;
-    padding: 6px 14px !important;
-    transition: all 0.2s ease !important;
+    padding: 7px 16px !important;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .chat-chip-btn > button:hover {
-    background: rgba(99, 102, 241, 0.15) !important;
-    border-color: rgba(99, 102, 241, 0.4) !important;
+    background: rgba(99, 102, 241, 0.18) !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
     color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/*       V2.2  —  ADVANCED VISUAL EFFECTS & MICRO-ANIMATIONS     */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ─── CORE ANIMATIONS ─── */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.88); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── STAGGERED ENTRANCE ANIMATIONS FOR CARDS ─── */
+.feature-box {
+    animation: fadeInUp 0.6s ease-out both;
+}
+.feature-box:nth-child(1) { animation-delay: 0.1s; }
+.feature-box:nth-child(2) { animation-delay: 0.25s; }
+.feature-box:nth-child(3) { animation-delay: 0.4s; }
+
+.step-card {
+    animation: fadeInLeft 0.5s ease-out both;
+}
+.step-card:nth-child(1) { animation-delay: 0.15s; }
+.step-card:nth-child(2) { animation-delay: 0.3s; }
+.step-card:nth-child(3) { animation-delay: 0.45s; }
+
+.metric-pill {
+    animation: scaleIn 0.45s ease-out both;
+}
+.metric-pill:nth-child(1) { animation-delay: 0.05s; }
+.metric-pill:nth-child(2) { animation-delay: 0.15s; }
+.metric-pill:nth-child(3) { animation-delay: 0.25s; }
+.metric-pill:nth-child(4) { animation-delay: 0.35s; }
+
+.phase-card {
+    animation: slideUp 0.55s ease-out both;
+}
+.overview-card {
+    animation: fadeInUp 0.5s ease-out both;
+}
+.tips-card {
+    animation: fadeInUp 0.5s ease-out 0.1s both;
+}
+.resource-card {
+    animation: fadeInUp 0.5s ease-out both;
+}
+.resource-card:nth-child(1) { animation-delay: 0.1s; }
+.resource-card:nth-child(2) { animation-delay: 0.2s; }
+.resource-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* ─── THIRD FLOATING ORB (CENTER MESH) ─── */
+.stApp > div:first-child::before {
+    content: "";
+    position: fixed;
+    top: 40%;
+    left: 45%;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, rgba(245, 158, 11, 0.04) 50%, transparent 70%);
+    filter: blur(100px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb3 25s ease-in-out infinite alternate;
+}
+@keyframes floatOrb3 {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    33%  { transform: translate(40px, -50px) scale(1.1) rotate(5deg); }
+    66%  { transform: translate(-30px, 30px) scale(0.94) rotate(-3deg); }
+    100% { transform: translate(20px, -20px) scale(1.05) rotate(2deg); }
+}
+
+/* ─── TYPEWRITER CURSOR BLINK ON HEADER ─── */
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ─── RAINBOW GRADIENT SHIMMER ON GENERATE BUTTON ─── */
+section[data-testid="stSidebar"] .stButton > button {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #38bdf8 50%, #6366f1 75%, #4f46e5 100%) !important;
+    background-size: 300% 300% !important;
+    animation: rainbowShift 6s ease-in-out infinite !important;
+}
+@keyframes rainbowShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ─── BUTTON RIPPLE ON CLICK ─── */
+.stButton > button {
+    position: relative;
+    overflow: hidden;
+}
+.stButton > button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease-out, height 0.5s ease-out, opacity 0.6s ease-out;
+    opacity: 0;
+    pointer-events: none;
+}
+.stButton > button:active::after {
+    width: 250px;
+    height: 250px;
+    opacity: 0;
+    transition: 0s;
+}
+
+/* ─── PARALLAX HOVER TILT ON MODULE QUICK-START CARDS ─── */
+div[data-testid="stVerticalBlock"] div[style*="border-radius: 14px"][style*="background: rgba(255, 255, 255, 0.02)"] {
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+div[data-testid="stVerticalBlock"] div[style*="border-radius: 14px"][style*="background: rgba(255, 255, 255, 0.02)"]:hover {
+    transform: rotateY(-2deg) rotateX(1.5deg) translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(129, 140, 248, 0.5) !important;
+}
+
+/* ─── GLOWING ANIMATED GRADIENT BORDER ON PHASE CARDS ─── */
+.phase-card {
+    position: relative;
+}
+.phase-card::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 19px;
+    background: linear-gradient(135deg, rgba(129, 140, 248, 0.5), rgba(56, 189, 248, 0.3), rgba(139, 92, 246, 0.5), rgba(99, 102, 241, 0.4));
+    background-size: 400% 400%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: borderGlow 8s linear infinite;
+}
+.phase-card:hover::before {
+    opacity: 1;
+}
+@keyframes borderGlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ─── NEON GLOW DIVIDERS ─── */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(99, 102, 241, 0.5) 20%, rgba(56, 189, 248, 0.35) 50%, rgba(139, 92, 246, 0.5) 80%, transparent 100%);
+    margin: 28px 0;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.2);
+    animation: glowPulse 4s ease-in-out infinite;
+}
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 6px rgba(99, 102, 241, 0.15); opacity: 0.7; }
+    50%      { box-shadow: 0 0 14px rgba(99, 102, 241, 0.35); opacity: 1; }
+}
+
+/* ─── SPARKLE PARTICLES IN WELCOME HERO ─── */
+.welcome-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+        radial-gradient(1.5px 1.5px at 15% 20%, rgba(199, 210, 254, 0.6) 50%, transparent 50%),
+        radial-gradient(1px 1px at 45% 65%, rgba(56, 189, 248, 0.5) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 72% 15%, rgba(167, 139, 250, 0.5) 50%, transparent 50%),
+        radial-gradient(1px 1px at 88% 72%, rgba(199, 210, 254, 0.4) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 35% 85%, rgba(56, 189, 248, 0.4) 50%, transparent 50%),
+        radial-gradient(1px 1px at 60% 40%, rgba(129, 140, 248, 0.5) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 25% 50%, rgba(245, 158, 11, 0.3) 50%, transparent 50%),
+        radial-gradient(1px 1px at 82% 45%, rgba(34, 197, 94, 0.3) 50%, transparent 50%);
+    animation: sparkleFloat 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 22px;
+}
+@keyframes sparkleFloat {
+    0%   { opacity: 0.5; transform: translateY(0) scale(1); }
+    25%  { opacity: 0.8; transform: translateY(-3px) scale(1.02); }
+    50%  { opacity: 0.6; transform: translateY(2px) scale(0.98); }
+    75%  { opacity: 0.9; transform: translateY(-2px) scale(1.01); }
+    100% { opacity: 0.5; transform: translateY(0) scale(1); }
+}
+.welcome-hero > * { position: relative; z-index: 2; }
+
+/* ─── ANIMATED NUMBER PULSE ON METRIC VALUES ─── */
+.metric-pill .mp-val {
+    animation: countPulse 2s ease-out both;
+}
+@keyframes countPulse {
+    0%   { opacity: 0; transform: scale(0.8) translateY(8px); filter: blur(3px); }
+    60%  { opacity: 1; transform: scale(1.05) translateY(-2px); filter: blur(0); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+/* ─── HOVER GLOW OUTLINE ON TABS ─── */
+.stTabs [data-baseweb="tab"] {
+    position: relative;
+}
+.stTabs [data-baseweb="tab"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #38bdf8);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+.stTabs [data-baseweb="tab"]:hover::after {
+    width: 70%;
+}
+
+/* ─── ANIMATED GRADIENT TEXT ON WELCOME TITLE ─── */
+.welcome-title {
+    background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 25%, #38bdf8 50%, #818cf8 75%, #ffffff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientText 8s ease-in-out infinite;
+}
+@keyframes gradientText {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ─── SMOOTH PROGRESS BAR ANIMATION ─── */
+.stProgress > div > div > div {
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: progressShine 3s ease-in-out infinite;
+}
+@keyframes progressShine {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+/* ─── CONCEPT TAG ENTRANCE ─── */
+.phase-card .concept-tag {
+    animation: tagPop 0.3s ease-out both;
+}
+.phase-card .concept-tag:nth-child(1) { animation-delay: 0.1s; }
+.phase-card .concept-tag:nth-child(2) { animation-delay: 0.15s; }
+.phase-card .concept-tag:nth-child(3) { animation-delay: 0.2s; }
+.phase-card .concept-tag:nth-child(4) { animation-delay: 0.25s; }
+.phase-card .concept-tag:nth-child(5) { animation-delay: 0.3s; }
+.phase-card .concept-tag:nth-child(6) { animation-delay: 0.35s; }
+@keyframes tagPop {
+    0% { opacity: 0; transform: scale(0.7) translateY(6px); }
+    70% { transform: scale(1.08) translateY(-2px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ─── CHECKBOX COMPLETION GLOW ─── */
+div[data-testid="stCheckbox"] input:checked + label {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+div[data-testid="stCheckbox"]:has(input:checked) {
+    background: rgba(34, 197, 94, 0.06) !important;
+    border-color: rgba(34, 197, 94, 0.25) !important;
+    border-left: 3px solid #22c55e !important;
+}
+
+/* ─── CHAT MESSAGE ENTRANCE ─── */
+[data-testid="stChatMessage"] {
+    animation: fadeInUp 0.4s ease-out both;
+}
+
+/* ─── SIDEBAR BRANDING GLOW ─── */
+section[data-testid="stSidebar"] > div:first-child {
+    position: relative;
+}
+section[data-testid="stSidebar"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(99, 102, 241, 0.08), transparent);
+    pointer-events: none;
+}
+
+/* ─── SUCCESS BANNER CONFETTI BURST ─── */
+.success-banner {
+    animation: fadeInSlide 0.4s ease-out, celebratePop 0.6s ease-out;
+}
+@keyframes celebratePop {
+    0%   { transform: scale(0.92); }
+    40%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* ─── QUICK PROMPT CHIPS FLOAT ANIMATION ─── */
+.chat-chip-btn > button {
+    animation: fadeInUp 0.35s ease-out both;
+}
+.chat-chip-btn:nth-child(1) > button { animation-delay: 0.05s; }
+.chat-chip-btn:nth-child(2) > button { animation-delay: 0.15s; }
+.chat-chip-btn:nth-child(3) > button { animation-delay: 0.25s; }
+.chat-chip-btn:nth-child(4) > button { animation-delay: 0.35s; }
+
+/* ─── SUBTLE NOISE TEXTURE OVERLAY ─── */
+.stApp::before, .stApp::after {
+    mix-blend-mode: soft-light;
+}
+
+/* ─── FOCUS RING GLOW ON ALL INPUTS ─── */
+input:focus, textarea:focus, select:focus, [data-baseweb="select"] div:focus-within {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25), 0 0 16px rgba(99, 102, 241, 0.15) !important;
+    border-color: rgba(99, 102, 241, 0.5) !important;
+    transition: all 0.2s ease;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #0c0a17; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+::-webkit-scrollbar-track { background: #0a0815; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; transition: background 0.3s; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); box-shadow: 0 0 6px rgba(99, 102, 241, 0.3); }
 
-hr { border: none; border-top: 1px solid var(--border-subtle); margin: 24px 0; }
+</style>
+""", unsafe_allow_html=True)
+
+# ─── ADDITIONAL VISUAL EFFECTS VIA SEPARATE INJECTION ───
+# This injects a floating particle canvas + ambient light sweep
+st.markdown("""
+<style>
+/* ─── AMBIENT LIGHT SWEEP ACROSS MAIN CONTENT ─── */
+.main .block-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.03), transparent);
+    animation: ambientSweep 15s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes ambientSweep {
+    0%   { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* ─── TOOLTIP GLOW ON SIDEBAR HELP ICONS ─── */
+.stTooltipIcon svg {
+    transition: all 0.25s ease;
+}
+.stTooltipIcon:hover svg {
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.6));
+    transform: scale(1.15);
+}
+
+/* ─── ANIMATED UNDERLINE ON LINKS ─── */
+a {
+    position: relative;
+    text-decoration: none !important;
+}
+a::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-indigo));
+    transition: width 0.3s ease;
+    border-radius: 1px;
+}
+a:hover::after {
+    width: 100%;
+}
+
+/* ─── PROGRESS CARD GLOW ON COMPLETION ─── */
+.progress-card {
+    transition: all 0.4s ease;
+}
+.progress-card:hover {
+    box-shadow: 0 8px 28px rgba(99, 102, 241, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border-color: var(--border-accent);
+}
+
+/* ─── DOWNLOAD BUTTON BOUNCE ─── */
+.stDownloadButton > button:hover {
+    animation: gentleBounce 0.5s ease;
+}
+@keyframes gentleBounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-6px); }
+    50%  { transform: translateY(-2px); }
+    70%  { transform: translateY(-4px); }
+    100% { transform: translateY(-2px) scale(1.01); }
+}
+
+/* ─── FLOATING STATUS BADGE BREATHE ─── */
+.live-dot {
+    animation: livePulse 2s infinite ease-in-out, dotBreathe 4s infinite ease-in-out !important;
+}
+@keyframes dotBreathe {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 4px #22c55e); }
+    50% { filter: brightness(1.4) drop-shadow(0 0 10px #22c55e); }
+}
 </style>
 """, unsafe_allow_html=True)
 
 
-# ─── HEADER BANNER ───
+# ─── HEADER BANNER WITH PULSE BADGES ───
 st.markdown("""
-<div style="padding: 10px 0 20px 0; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); margin-bottom: 24px;">
+<div style="padding: 12px 0 22px 0; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 26px;">
     <div>
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-            <span style="font-size: 1.8em;">🎯</span>
-            <h1 style="margin: 0; line-height: 1.1; font-size: 2.2em; font-weight: 800; letter-spacing: -0.5px; color: #f8fafc;">
-                SmartStudy <span style="background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI</span>
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+            <span style="font-size: 2em; filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));">🎯</span>
+            <h1 style="margin: 0; line-height: 1.1; font-size: 2.3em; font-weight: 800; letter-spacing: -0.5px; color: #f8fafc;">
+                SmartStudy <span style="background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 25px rgba(99, 102, 241, 0.35);">AI</span>
             </h1>
         </div>
-        <p style="color: #94a3b8; font-size: 0.9em; margin: 0; font-weight: 500; letter-spacing: 0.8px;">
-            KDU Academic Advisory System • BSc (Hons) Information Technology
+        <p style="color: #94a3b8; font-size: 0.92em; margin: 0; font-weight: 500; letter-spacing: 0.8px;">
+            KDU Academic Advisory System • General Sir John Kotelawala Defence University
         </p>
     </div>
-    <div style="display: flex; gap: 8px;">
-        <span style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3); color: #a5b4fc; padding: 4px 12px; border-radius: 20px; font-size: 0.75em; font-weight: 700;">
-            Ollama Powered
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <span style="display: inline-flex; align-items: center; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.35); color: #86efac; padding: 5px 14px; border-radius: 20px; font-size: 0.78em; font-weight: 700; box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);">
+            <span class="live-dot"></span> Ollama RTX 4060 GPU Active
         </span>
-        <span style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); color: #86efac; padding: 4px 12px; border-radius: 20px; font-size: 0.75em; font-weight: 700;">
-            KDU v2.0
+        <span style="background: rgba(99, 102, 241, 0.16); border: 1px solid rgba(99, 102, 241, 0.35); color: #c7d2fe; padding: 5px 14px; border-radius: 20px; font-size: 0.78em; font-weight: 700; box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);">
+            KDU Edition v2.2
         </span>
     </div>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 # ─── HELPER: Semester Mapping for KDU BSc IT ───
@@ -1811,33 +2379,78 @@ else:
         """, unsafe_allow_html=True)
 
     with col_popular:
-        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 14px;">⚡ Quick-Select High-Yield Modules</h3>', unsafe_allow_html=True)
-        st.markdown('<p style="color: #94a3b8; font-size: 0.85em; margin-bottom: 12px;">Click a card below to quickly set your target module:</p>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: #f8fafc; font-size: 1.2em; font-weight: 700; margin-bottom: 6px;">⚡ Quick-Start High-Yield Modules</h3>', unsafe_allow_html=True)
+        st.markdown('<p style="color: #94a3b8; font-size: 0.85em; margin-bottom: 14px;">Select one of the most demanding KDU exam modules to auto-configure your plan:</p>', unsafe_allow_html=True)
         
         pop1, pop2 = st.columns(2)
         with pop1:
-            if st.button("💻 IT12023\nOOP", use_container_width=True):
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #a5b4fc; font-size: 0.88em;">IT12023</span>
+                    <span style="font-size: 0.7em; background: rgba(99, 102, 241, 0.15); color: #c7d2fe; padding: 2px 8px; border-radius: 10px;">Y1 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Object Oriented Programming</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">Inheritance • Polymorphism • I/O</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("🚀 Load OOP Plan", key="btn_oop", use_container_width=True):
                 st.session_state.selected_semester = "Year 1 • Semester 2"
                 st.session_state.target_subject_select = "IT12023: Object Oriented Programming"
                 st.rerun()
-            if st.button("🌐 IT12062\nNetworks I", use_container_width=True):
+
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px; margin-top: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #7dd3fc; font-size: 0.88em;">IT12062</span>
+                    <span style="font-size: 0.7em; background: rgba(56, 189, 248, 0.15); color: #bae6fd; padding: 2px 8px; border-radius: 10px;">Y1 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Computer Network Systems I</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">OSI • TCP/IP • Subnetting • MAC</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("🚀 Load Networks Plan", key="btn_net", use_container_width=True):
                 st.session_state.selected_semester = "Year 1 • Semester 2"
                 st.session_state.target_subject_select = "IT12062: Computer Network Systems I"
                 st.rerun()
+
         with pop2:
-            if st.button("🌲 IT22013\nDSA", use_container_width=True):
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #c4b5fd; font-size: 0.88em;">IT22013</span>
+                    <span style="font-size: 0.7em; background: rgba(139, 92, 246, 0.15); color: #ddd6fe; padding: 2px 8px; border-radius: 10px;">Y2 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Data Structures & Algorithms</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">BST • Graphs • Big-O Complexity</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("🚀 Load DSA Plan", key="btn_dsa", use_container_width=True):
                 st.session_state.selected_semester = "Year 2 • Semester 2"
                 st.session_state.target_subject_select = "IT22013: Data Structures and Algorithms"
                 st.rerun()
-            if st.button("⚙️ IT22032\nOperating Systems", use_container_width=True):
+
+            st.markdown("""
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 14px; padding: 14px; margin-bottom: 10px; margin-top: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 800; color: #fcd34d; font-size: 0.88em;">IT22032</span>
+                    <span style="font-size: 0.7em; background: rgba(245, 158, 11, 0.15); color: #fef3c7; padding: 2px 8px; border-radius: 10px;">Y2 • S2</span>
+                </div>
+                <div style="font-weight: 700; color: #f8fafc; font-size: 0.95em; margin-bottom: 4px;">Operating Systems</div>
+                <div style="color: #64748b; font-size: 0.78em; margin-bottom: 10px;">CPU Scheduling • Deadlocks • Paging</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("🚀 Load OS Plan", key="btn_os", use_container_width=True):
                 st.session_state.selected_semester = "Year 2 • Semester 2"
                 st.session_state.target_subject_select = "IT22032: Operating Systems"
                 st.rerun()
 
         st.markdown("""
-        <div style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: 12px; padding: 14px; margin-top: 14px;">
-            <span style="color: #a5b4fc; font-weight: 600; font-size: 0.82em;">💡 Pro Tip:</span>
-            <span style="color: #cbd5e1; font-size: 0.82em;"> Once generated, you can download a full printable PDF study kit or ask the AI Tutor questions about any difficult topic.</span>
+        <div style="background: rgba(99, 102, 241, 0.08); border: 1px dashed rgba(99, 102, 241, 0.3); border-radius: 14px; padding: 14px 18px; margin-top: 16px; display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.2em;">💡</span>
+            <span style="color: #cbd5e1; font-size: 0.83em; line-height: 1.5;">
+                <strong style="color: #a5b4fc;">Pro Tip:</strong> Click any module above or use the sidebar on the left to set custom days and capacity before generating your plan.
+            </span>
         </div>
         """, unsafe_allow_html=True)
 

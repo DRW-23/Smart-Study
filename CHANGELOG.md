@@ -5,8 +5,63 @@ This document tracks all project setup actions, code modifications, UI/UX overha
 ---
 
 ## 📌 Change Log Index
+- [2026-10-06 — v2.2.0: Advanced Visual Effects & Premium Micro-Animations](#2026-10-06--v220-advanced-visual-effects--premium-micro-animations)
 - [2026-10-06 — v2.1.0: Complete UI/UX Overhaul & Interactive Features](#2026-10-06--v210-complete-uiux-overhaul--interactive-features)
 - [2026-10-06 — v2.0.0: Initial Project Clone, Environment Setup & Model Configuration](#2026-10-06--v200-initial-project-clone-environment-setup--model-configuration)
+
+---
+
+## [2026-10-06 — v2.2.0: Advanced Visual Effects & Premium Micro-Animations]
+
+### 🎯 Purpose
+Elevate the visual experience from polished to **premium-tier** with 18+ new CSS animations, ambient effects, and interactive micro-interactions. Transform the UI from a functional dark-mode dashboard into a living, breathing interface with depth, motion, and delight.
+
+### 📂 Files Modified
+- [`app/app.py`](file:///C:/Users/user/.gemini/antigravity-ide/scratch/Smart-Study/app/app.py) — Added ~340 lines of new CSS animations + separate ambient injection block
+- [`CHANGELOG.md`](file:///C:/Users/user/.gemini/antigravity-ide/scratch/Smart-Study/CHANGELOG.md) — Added this v2.2.0 entry
+
+### 📝 Summary of Changes
+
+#### 1. Ambient Background & Atmosphere
+- **Third Floating Orb (Center Mesh)**: Added a violet/amber gradient orb positioned center-screen with a 25s looping `floatOrb3` animation including rotation, creating a tri-point aurora mesh with the existing top-left and bottom-right orbs.
+- **Ambient Light Sweep**: A subtle indigo gradient silently sweeps across the main content area every 15 seconds, simulating theatrical stage lighting.
+- **Sparkle Particles in Welcome Hero**: 8 tiny CSS radial-gradient particles (indigo, cyan, violet, amber, green) float gently inside the hero banner with a 12s breathe animation.
+
+#### 2. Entrance & Stagger Animations
+- **Feature Box Cards**: Staggered `fadeInUp` entrance (0.1s, 0.25s, 0.4s delay per card).
+- **Step Cards**: Staggered `fadeInLeft` entrance (0.15s, 0.3s, 0.45s delay).
+- **Metric Pills**: Staggered `scaleIn` pop entrance (0.05s–0.35s delay per pill).
+- **Phase Cards**: `slideUp` entrance animation.
+- **Resource Cards**: Staggered `fadeInUp` per column.
+- **Concept Tags**: `tagPop` animation (scale from 0.7 → 1.08 → 1.0) with staggered delays per tag.
+- **Chat Messages**: `fadeInUp` on each new message bubble.
+- **Quick Prompt Chips**: Staggered float-in animation.
+- **Success Banner**: `celebratePop` scale bounce (0.92 → 1.03 → 1.0) combined with `fadeInSlide`.
+
+#### 3. Interactive Hover Effects
+- **Glowing Animated Gradient Border on Phase Cards**: On hover, a hidden `::before` pseudo-element reveals a 4-color animated gradient border (400% background-size, 8s cycle) creating a "breathing neon outline" effect.
+- **Parallax Hover Tilt on Quick-Start Module Cards**: On hover, cards undergo a subtle 3D tilt (`rotateY(-2deg) rotateX(1.5deg)`) with perspective preserved, adding a premium card-game feel.
+- **Progress Card Glow**: Hover reveals an indigo box-shadow glow and border accent shift.
+- **Tooltip Help Icon Glow**: Sidebar `?` help icons gain a drop-shadow glow and 15% scale bump on hover.
+
+#### 4. Button & Input Enhancements
+- **Rainbow Gradient Shimmer on Generate Button**: Sidebar CTA now cycles through a 5-stop gradient (indigo → violet → cyan → indigo → deep-indigo) with 300% background-size and a 6s `rainbowShift` animation.
+- **Button Ripple on Click**: All buttons gain a CSS-only ripple effect: a circular white flash radiates from center on `active` state.
+- **Download Button Bounce**: A gentle 4-step bounce animation on hover.
+- **Focus Ring Glow**: All inputs, textareas, and select dropdowns gain a dual-ring indigo glow (`box-shadow: 0 0 0 2px ... + 0 0 16px ...`) on focus.
+
+#### 5. Decorative & Polish
+- **Neon Glow Dividers**: All `<hr>` elements replaced with a multi-stop gradient line (transparent → indigo → cyan → violet → transparent) with a pulsing `glowPulse` box-shadow.
+- **Animated Gradient Text on Welcome Title**: The `welcome-title` uses a 5-stop gradient with 300% background-size animating `gradientText` over 8s, creating a shimmering rainbow text effect.
+- **Animated Number Pulse on Metric Values**: Values fade in with blur, overshoot scale, then settle (countPulse animation).
+- **Hover Glow Underline on Tabs**: Inactive tabs gain a gradient underline that expands from center to 70% width on hover.
+- **Animated Link Underlines**: All `<a>` tags gain an expanding gradient underline on hover.
+- **Checkbox Completion Glow**: Checked checkboxes turn green-tinted with a left-border accent.
+- **Sidebar Bottom Gradient**: Sidebar has a subtle bottom gradient fade.
+- **Progress Bar Shine**: Periodic brightness pulse on the progress bar fill.
+- **Live Dot Breathe**: GPU status dot combines pulse + brightness breathe animation.
+- **Smooth Scrollbar**: Scrollbar thumb gains a hover glow effect.
+- **Version Badge**: Updated from `KDU Edition v2.1` → `KDU Edition v2.2`.
 
 ---
 
