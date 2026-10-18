@@ -1793,7 +1793,7 @@ if generate_clicked:
     st.session_state.confidence = confidence
     st.session_state.completed_tasks = set()
 
-    warnings_list = check_academic_rules(exam_days, daily_hours)
+    warnings_list = check_academic_rules(exam_days, daily_hours, confidence=confidence, study_style=study_style)
     if warnings_list:
         for w in warnings_list:
             st.markdown(f'<div class="warning-banner"><span class="wb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><span class="wb-text">{w}</span></div>', unsafe_allow_html=True)
